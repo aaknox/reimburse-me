@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hibernate-configuration>
+	<session-factory>
+		<!-- General properties -->
+		<property name="hibernate.transaction.auto_close_session">true</property>
+		<property name="hibernate.connection.autocommit">false</property>
+		<property name="hibernate.current_session_context_class">thread</property>
+
+		<!-- Setting the schema namespace -->
+		<property name="hibernate.default_schema">public</property>
+
+		<!-- Show SQL on stdout -->
+		<property name="hibernate.show_sql">false</property>
+		<property name="hibernate.format_sql">false</property>
+
+		<!-- Postgres connections -->
+		<property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect
+		</property>
+		<property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
+		<property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/employee-reimbursement-db
+		</property>
+		<property name="hibernate.connection.username">postgres</property>
+		<property name="hibernate.connection.password">password</property>
+
+		<!-- add classes to map from here... -->
+		<mapping class="com.revature.models.User" />
+		<mapping class="com.revature.models.UserRole" />
+	</session-factory>
+</hibernate-configuration>
