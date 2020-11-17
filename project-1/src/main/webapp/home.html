@@ -2,48 +2,51 @@
 <html lang="en">
 
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ReimburseMe! || Home Page</title>
-<link rel="preconnect" href="https://fonts.gstatic.com">
-<link
-	href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
-	rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="css/main.css">
-<script src="https://kit.fontawesome.com/b825c1b0e8.js"></script>
-<link rel="shortcut icon" href="/img/money-icon-2.png"
-	type="image/x-icon" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReimburseMe! || Home Page</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <script src="https://kit.fontawesome.com/b825c1b0e8.js"></script>
+    <link rel="shortcut icon" href="/img/money-icon-2.png" type="image/x-icon" />
 </head>
 
 <body>
-	<header>
-		<h1>Select an option from below.</h1>
-	</header>
-	<section id="option-container">
-		<div id="option">
-			<i class="fas fa-file-invoice-dollar"></i> <a href="">Submit a
+    <header>
+        <h1>Select an option from below.</h1>
+    </header>
+    <section id="option-container">
+        <div id="option">
+            <i class="fas fa-file-invoice-dollar"></i> <a href="">Submit a
 				Reimbursement Request</a>
-		</div>
-		<div id="option">
-			<i class="fas fa-clipboard-list"></i> <a href="">View Past
+        </div>
+        <div id="option">
+            <i class="fas fa-clipboard-list"></i> <a href="">View Past
 				Requests</a>
-		</div>
-		<div id="option">
-			<i class="fas fa-search-dollar"></i> <a href="">View Pending
+        </div>
+        <div id="option">
+            <i class="fas fa-search-dollar"></i> <a href="">View Pending
 				Requests</a>
-		</div>
-	</section>
-	<br>
-	<footer>
-		<nav>
-			<ul>
-				<li><span>Welcome, User!</span></li>
-				<li><a href="">View Profile</a></li>
-				<li><a href="">Need Help?</a></li>
-				<li><a href="index.html">Log Out</a></li>
-			</ul>
-		</nav>
-	</footer>
+        </div>
+    </section>
+    <br>
+    <footer>
+        <nav>
+            <ul>
+                <li><span id="welcome-message">Welcome, User!</span></li>
+                <li><a href="">View Profile</a></li>
+                <li><a href="">Need Help?</a></li>
+                <li><a href="index.html">Log Out</a></li>
+            </ul>
+        </nav>
+    </footer>
+    <script>
+        var sessionUser = window.sessionStorage.getItem('currentUser');
+        console.log(sessionUser);
+        let message = document.getElementById('welcome-message');
+        message.innerHTML = `Welcome, ${{sessionUser}}!`;
+    </script>
 </body>
 
 </html>
