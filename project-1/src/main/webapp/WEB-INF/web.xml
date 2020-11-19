@@ -4,12 +4,10 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	version="2.5">
 	<display-name>project-1</display-name>
-
 	<context-param>
 		<param-name>log4j-config-location</param-name>
 		<param-value>WEB-INF/log4j.properties</param-value>
 	</context-param>
-
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
 		<welcome-file>index.htm</welcome-file>
@@ -18,25 +16,29 @@
 		<welcome-file>default.htm</welcome-file>
 		<welcome-file>default.jsp</welcome-file>
 	</welcome-file-list>
-
 	<servlet>
 		<description></description>
-		<display-name>LoginServlet</display-name>
-		<servlet-name>LoginServlet</servlet-name>
-		<servlet-class>com.revature.servlets.LoginServlet</servlet-class>
+		<display-name>MasterFrontControllerServlet</display-name>
+		<servlet-name>MasterFrontControllerServlet</servlet-name>
+		<servlet-class>com.revature.mastercontrollers.MasterFrontControllerServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>LoginServlet</servlet-name>
+		<servlet-name>MasterFrontControllerServlet</servlet-name>
+		<url-pattern>/reimburse-me/front</url-pattern>
 		<url-pattern>/login</url-pattern>
+		<url-pattern>/logout</url-pattern>
+		<url-pattern>/profile</url-pattern>
 	</servlet-mapping>
 	<servlet>
 		<description></description>
-		<display-name>LogoutServlet</display-name>
-		<servlet-name>LogoutServlet</servlet-name>
-		<servlet-class>com.revature.servlets.LogoutServlet</servlet-class>
+		<display-name>MasterBackControllerServlet</display-name>
+		<servlet-name>MasterBackControllerServlet</servlet-name>
+		<servlet-class>com.revature.mastercontrollers.MasterBackControllerServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>LogoutServlet</servlet-name>
-		<url-pattern>/logout</url-pattern>
+		<servlet-name>MasterBackControllerServlet</servlet-name>
+		<url-pattern>/reimburse-me/back</url-pattern>
+		<url-pattern>/success</url-pattern>
+		<url-pattern>/error</url-pattern>
 	</servlet-mapping>
 </web-app>

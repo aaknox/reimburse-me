@@ -1,23 +1,69 @@
-package com.revature.models;
+package com.revature.beans;
 
-import java.time.LocalDateTime;
+import java.io.Serializable;
 
-public class User {
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+/*
+ * A Data Transfer Object (DTO) is an object that is used to encapsulate data and sent it from one
+ * subsystem to an app to another.
+ * DTO's are commonly used in n-teir architecture to transfer data between a MODEL and VIEW.
+ * A DTO differs from a DAO (which persists and retrieves data from a database) in that a DTO
+ * doesn't contain any business logic except for the storage and retrieval of its own data.
+ * 
+ */
+
+@Entity
+@Table(name = "ers_users")
+public class UserBean implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
+	// FIELDS
+	
+	@Id
+	@Column(name = "ers_user_id")
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int userId;
+	
+	@Column(name = "ers_username", nullable = false, unique = true)
 	private String username;
+	
+	@Column(name = "ers_user_password")
 	private String password;
+	
+	@Column(name = "ers_user_first_name")
 	private String firstName;
+	
+	@Column(name = "ers_user_last_name")
 	private String lastName;
+	
+	@Column(name = "ers_user_email")
 	private String email;
-	private LocalDateTime hireDate;
-	private UserRole userRole;
+	
+	@Column(name = "ers_user_hire_date")
+	private String hireDate;
+	
+	@OneToOne(mappedBy = "roleId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name = "fk_constraint_usersToUserRoles", referencedColumnName = "ers_user_role_id")
+	private int userRoleId;
 
-	public User() {
+	public UserBean() {
 		// no args constructor
 	}
 
-	public User(int userId, String username, String password, String firstName, String lastName, String email,
-			LocalDateTime hireDate, UserRole userRole) {
+	// all args constructor
+	public UserBean(int userId, String username, String password, String firstName, String lastName, String email,
+			String hireDate, int userRoleId) {
 		super();
 		this.userId = userId;
 		this.username = username;
@@ -26,7 +72,20 @@ public class User {
 		this.lastName = lastName;
 		this.email = email;
 		this.hireDate = hireDate;
-		this.userRole = userRole;
+		this.userRoleId = userRoleId;
+	}
+
+	// all except id constructor
+	public UserBean(String username, String password, String firstName, String lastName, String email, String hireDate,
+			int userRoleId) {
+		super();
+		this.username = username;
+		this.password = password;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.hireDate = hireDate;
+		this.userRoleId = userRoleId;
 	}
 
 	public int getUserId() {
@@ -77,20 +136,24 @@ public class User {
 		this.email = email;
 	}
 
-	public LocalDateTime getHireDate() {
+	public String getHireDate() {
 		return hireDate;
 	}
 
-	public void setHireDate(LocalDateTime hireDate) {
+	public void setHireDate(String hireDate) {
 		this.hireDate = hireDate;
 	}
 
-	public UserRole getUserRole() {
-		return userRole;
+	public int getUserRoleId() {
+		return userRoleId;
 	}
 
-	public void setUserRole(UserRole userRole) {
-		this.userRole = userRole;
+	public void setUserRoleId(int userRoleId) {
+		this.userRoleId = userRoleId;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 	@Override
@@ -103,7 +166,7 @@ public class User {
 		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
 		result = prime * result + userId;
-		result = prime * result + ((userRole == null) ? 0 : userRole.hashCode());
+		result = prime * result + userRoleId;
 		result = prime * result + ((username == null) ? 0 : username.hashCode());
 		return result;
 	}
@@ -116,7 +179,7 @@ public class User {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		User other = (User) obj;
+		UserBean other = (UserBean) obj;
 		if (email == null) {
 			if (other.email != null)
 				return false;
@@ -144,10 +207,7 @@ public class User {
 			return false;
 		if (userId != other.userId)
 			return false;
-		if (userRole == null) {
-			if (other.userRole != null)
-				return false;
-		} else if (!userRole.equals(other.userRole))
+		if (userRoleId != other.userRoleId)
 			return false;
 		if (username == null) {
 			if (other.username != null)
@@ -160,8 +220,8 @@ public class User {
 	@Override
 	public String toString() {
 		return "User [userId=" + userId + ", username=" + username + ", password=" + password + ", firstName="
-				+ firstName + ", lastName=" + lastName + ", email=" + email + ", hireDate=" + hireDate + ", userRole="
-				+ userRole + "]";
+				+ firstName + ", lastName=" + lastName + ", email=" + email + ", hireDate=" + hireDate + ", userRoleId="
+				+ userRoleId + "]";
 	}
 
 }

@@ -1,14 +1,35 @@
-package com.revature.models;
+package com.revature.beans;
 
-public class UserRole {
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "ers_user_roles")
+public class UserRoleBean implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
+	// fields
+	
+	@Id
+	@Column(name = "ers_role_id")
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int roleId;
+	
+	@Column(name = "ers_role_name")
 	private String roleName;
 
-	public UserRole() {
-		// no args constructor
+	public UserRoleBean() {
+		// TODO Auto-generated constructor stub
 	}
 
-	public UserRole(int roleId, String roleName) {
+	public UserRoleBean(int roleId, String roleName) {
 		super();
 		this.roleId = roleId;
 		this.roleName = roleName;
@@ -30,9 +51,8 @@ public class UserRole {
 		this.roleName = roleName;
 	}
 
-	@Override
-	public String toString() {
-		return "UserRole [roleId=" + roleId + ", roleName=" + roleName + "]";
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 	@Override
@@ -52,7 +72,7 @@ public class UserRole {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		UserRole other = (UserRole) obj;
+		UserRoleBean other = (UserRoleBean) obj;
 		if (roleId != other.roleId)
 			return false;
 		if (roleName == null) {
@@ -61,6 +81,11 @@ public class UserRole {
 		} else if (!roleName.equals(other.roleName))
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "UserRoleBean [roleId=" + roleId + ", roleName=" + roleName + "]";
 	}
 
 }

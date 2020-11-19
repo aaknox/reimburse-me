@@ -1,15 +1,35 @@
-package com.revature.models;
+package com.revature.beans;
 
-public class ReimbursementType {
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "ers_reimbursements_types")
+public class ReimbursementTypeBean implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
 	// fields
+	
+	@Id
+	@Column(name = "type_id")
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int typeId;
+	
+	@Column(name="type_name")
 	private String typeName;
 
-	public ReimbursementType() {
+	public ReimbursementTypeBean() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public ReimbursementType(int typeId, String typeName) {
+	public ReimbursementTypeBean(int typeId, String typeName) {
 		super();
 		this.typeId = typeId;
 		this.typeName = typeName;
@@ -31,6 +51,10 @@ public class ReimbursementType {
 		this.typeName = typeName;
 	}
 
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -48,7 +72,7 @@ public class ReimbursementType {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		ReimbursementType other = (ReimbursementType) obj;
+		ReimbursementTypeBean other = (ReimbursementTypeBean) obj;
 		if (typeId != other.typeId)
 			return false;
 		if (typeName == null) {
@@ -61,7 +85,7 @@ public class ReimbursementType {
 
 	@Override
 	public String toString() {
-		return "ReimbursementType [typeId=" + typeId + ", typeName=" + typeName + "]";
+		return "ReimbursementTypeBean [typeId=" + typeId + ", typeName=" + typeName + "]";
 	}
 
 }

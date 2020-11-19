@@ -6,43 +6,18 @@ import java.util.List;
 import javax.persistence.Query;
 
 import org.apache.log4j.Logger;
-import org.hibernate.Criteria;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.boot.MetadataSources;
-import org.hibernate.boot.registry.StandardServiceRegistry;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
+import com.revature.models.Reimbursement;
 import com.revature.models.User;
+import com.revature.util.HibernateUtil;
 
 public class UserDaoImpl implements UserDao {
 	private static Logger log = Logger.getLogger(UserDaoImpl.class);
-	// load hibernate session factory
-	protected SessionFactory sessionFactory;
-
-	public void setUp() throws Exception {
-		// A SessionFactory is set up once for an application!
-		// HERE, you can configure settings from hibernate.cfg.xml
-		final StandardServiceRegistry registry = new StandardServiceRegistryBuilder().configure().build();
-		try {
-			sessionFactory = new MetadataSources(registry).buildMetadata().buildSessionFactory();
-		} catch (Exception e) {
-			// The registry would be destroyed by the SessionFactory, but we had trouble
-			// building the SessionFactory
-			// so destroy it manually.
-			log.warn("failed here. Stack Trace: ", e);
-			StandardServiceRegistryBuilder.destroy(registry);
-		}
-	}
-
-	public void exit() {
-		sessionFactory.close();
-	}
+	private static Session session = HibernateUtil.getSession();
 
 	@Override
 	public void insertUser(User user) {
-		Session session = sessionFactory.openSession();
-
 		session.beginTransaction();
 
 		try {
@@ -52,49 +27,39 @@ public class UserDaoImpl implements UserDao {
 		}
 
 		session.getTransaction().commit();
-
+		
 		session.close();
 	}
 
 	@Override
 	public List<User> selectAllUsers() {
-		Session session = sessionFactory.openSession();
 		List<User> userList = new ArrayList<User>();
-
-		session.beginTransaction();
 		try {
-			userList = session.createQuery("SELECT * FROM ers_users ORDER BY ers_user_id", User.class).getResultList();
+			userList = session.createQuery("SELECT * FROM User ORDER BY userId", User.class).getResultList();
 
 		} catch (Exception e) {
 			log.warn("Failed to find all users in database. Stack Trace: ", e);
 		}
-
-		session.getTransaction().commit();
 		session.close();
 		return userList;
 	}
 
 	@Override
 	public User selectUserByUsername(String username) {
-		Session session = sessionFactory.openSession();
 		User user = null;
-		session.beginTransaction();
 		try {
-			Query query = session.createQuery("from ers_users where ers_username =:username ").setParameter("username", username);
-			user = (User) query.getSingleResult();
+			List<User> userList = session.createQuery("from User where username='" + username + "'", User.class).list();
+			user = userList.get(0);
 			log.info("My user: " + user);
 		} catch (Exception e) {
 			log.warn("Failed to find user by username in database. Stack Trace: ", e);
 		}
-
-		session.getTransaction().commit();
 		session.close();
 		return user;
 	}
 
 	@Override
 	public void updateUser(User user) {
-		Session session = sessionFactory.openSession();
 
 		session.beginTransaction();
 		try {
@@ -109,7 +74,6 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public void updatePassword(String username, String password) {
-		Session session = sessionFactory.openSession();
 		User user = null;
 		session.beginTransaction();
 		try {
@@ -129,7 +93,6 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public void deleteUser(User user) {
-		Session session = sessionFactory.openSession();
 
 		session.beginTransaction();
 		try {
