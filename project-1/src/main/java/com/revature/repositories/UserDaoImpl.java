@@ -8,6 +8,7 @@ import javax.persistence.Query;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 
+import com.revature.beans.UserBean;
 import com.revature.models.Reimbursement;
 import com.revature.models.User;
 import com.revature.util.HibernateUtil;
@@ -47,6 +48,7 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public User selectUserByUsername(String username) {
 		User user = null;
+		
 		try {
 			List<User> userList = session.createQuery("from User where username='" + username + "'", User.class).list();
 			user = userList.get(0);

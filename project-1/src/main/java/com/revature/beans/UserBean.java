@@ -22,39 +22,35 @@ import javax.persistence.Table;
  * 
  */
 
-@Entity
-@Table(name = "ers_users")
+
 public class UserBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	// FIELDS
 	
-	@Id
-	@Column(name = "ers_user_id")
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	
 	private int userId;
 	
-	@Column(name = "ers_username", nullable = false, unique = true)
+	
 	private String username;
 	
-	@Column(name = "ers_user_password")
+	
 	private String password;
 	
-	@Column(name = "ers_user_first_name")
+	
 	private String firstName;
 	
-	@Column(name = "ers_user_last_name")
+	
 	private String lastName;
 	
-	@Column(name = "ers_user_email")
+	
 	private String email;
 	
-	@Column(name = "ers_user_hire_date")
+	
 	private String hireDate;
 	
-	@OneToOne(mappedBy = "roleId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name = "fk_constraint_usersToUserRoles", referencedColumnName = "ers_user_role_id")
+	
 	private int userRoleId;
 
 	public UserBean() {

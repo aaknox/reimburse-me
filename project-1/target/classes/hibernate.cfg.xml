@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <hibernate-configuration>
 	<session-factory>
-		<!-- General properties -->
-		<property name="hibernate.transaction.auto_close_session">true</property>
-		<property name="hibernate.connection.autocommit">false</property>
-		<property name="hibernate.current_session_context_class">thread</property>
-
 		<!-- Setting the schema namespace -->
 		<property name="hibernate.default_schema">public</property>
 
@@ -17,13 +12,26 @@
 		<property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect
 		</property>
 		<property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
+		
+		<!-- hbm2ddl.auto is a hibernate property that exports schema DDL to the 
+			database when the SessionFactory is created -->
+		<property name="hibernate.hbm2ddl.auto">validate</property>
+		
+		<!-- Offline DB Credentials -->
 		<property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/employee-reimbursement-db
 		</property>
 		<property name="hibernate.connection.username">postgres</property>
 		<property name="hibernate.connection.password">password</property>
 
+		<!-- AWS RDS Credentials -->
+		<!--<property name="hibernate.connection.url">jdbc:postgresql://aak-ers-api.c6gi8vtgydns.us-east-2.rds.amazonaws.com:5432/ers_database 
+			</property> <property name="hibernate.connection.username">postgres</property> 
+			<property name="hibernate.connection.password">password</property> -->
+
 		<!-- add classes to map from here... -->
 		<mapping class="com.revature.models.User" />
 		<mapping class="com.revature.models.UserRole" />
+		<mapping class="com.revature.beans.UserBean" />
+		<mapping class="com.revature.beans.UserRoleBean" />
 	</session-factory>
 </hibernate-configuration>

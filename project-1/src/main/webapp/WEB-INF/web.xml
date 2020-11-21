@@ -18,16 +18,13 @@
 	</welcome-file-list>
 	<servlet>
 		<description></description>
-		<display-name>MasterFrontControllerServlet</display-name>
-		<servlet-name>MasterFrontControllerServlet</servlet-name>
-		<servlet-class>com.revature.mastercontrollers.MasterFrontControllerServlet</servlet-class>
+		<display-name>MasterForwardingServlet</display-name>
+		<servlet-name>MasterForwardingServlet</servlet-name>
+		<servlet-class>com.revature.mastercontrollers.MasterForwardingServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>MasterFrontControllerServlet</servlet-name>
-		<url-pattern>/reimburse-me/front</url-pattern>
-		<url-pattern>/login</url-pattern>
-		<url-pattern>/logout</url-pattern>
-		<url-pattern>/profile</url-pattern>
+		<servlet-name>MasterForwardingServlet</servlet-name>
+		<url-pattern>/reimburse-me/*</url-pattern>
 	</servlet-mapping>
 	<servlet>
 		<description></description>
@@ -37,8 +34,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>MasterBackControllerServlet</servlet-name>
-		<url-pattern>/reimburse-me/back</url-pattern>
-		<url-pattern>/success</url-pattern>
-		<url-pattern>/error</url-pattern>
+		<url-pattern>/api/*</url-pattern>
+		<url-pattern>/logout</url-pattern>
 	</servlet-mapping>
 </web-app>

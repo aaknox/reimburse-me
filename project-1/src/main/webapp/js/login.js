@@ -1,7 +1,7 @@
-var getBtn = document.getElementById('get-req');
-var postBtn = document.getElementById('post-req');
+console.log('index.html loaded...');
 
-var givenUsername = document.getElementById('username').value;
+var postBtn = document.getElementById('post-req');
+var givenUserName = document.getElementById('username').value;
 var givenPassword = document.getElementById('password').value;
 
 const sendHttpRequest = (method, url, data) => {
@@ -40,28 +40,21 @@ const sendHttpRequest = (method, url, data) => {
         xhr.send(JSON.stringify(data));
 
     });
-    console.log(promise);
     return promise;
 };
 
-const getData = () => {
-    sendHttpRequest('GET', 'http://localhost:8080/reimburse-me/login').then(responseData => {
-        console.log(responseData);
-    }).catch(err => {
-        console.log(err);
-    });
-};
-
 const sendData = () => {
-    sendHttpRequest('POST', 'http://localhost:8080/reimburse-me/login', {
-        username: givenUsername,
+    console.log('starting to send request to server');
+    sendHttpRequest('POST', 'http://localhost:8080/project-1/reimburse-me/login', {
+        username: givenUserName,
         password: givenPassword
     }).then(responseData => {
+        console.log('successful login')
         console.log(responseData);
     }).catch(err => {
+        console.log('bad login')
         console.log(err);
     });
 };
 
-getBtn.addEventListener('click', getData);
 postBtn.addEventListener('submit', sendData);

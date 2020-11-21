@@ -2,6 +2,7 @@ package com.revature.repositories;
 
 import java.util.List;
 
+import com.revature.beans.UserBean;
 import com.revature.models.User;
 
 public interface UserDao {

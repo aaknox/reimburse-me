@@ -9,20 +9,17 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Entity
-@Table(name = "ers_user_roles")
+
 public class UserRoleBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	// fields
 	
-	@Id
-	@Column(name = "ers_role_id")
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	
 	private int roleId;
 	
-	@Column(name = "ers_role_name")
+	
 	private String roleName;
 
 	public UserRoleBean() {

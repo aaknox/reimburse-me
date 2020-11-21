@@ -1,15 +1,48 @@
 package com.revature.models;
 
-import java.time.LocalDateTime;
+import java.io.Serializable;
+import java.time.LocalDate;
 
-public class User {
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "ers_users")
+public class User implements Serializable{
+	private static final long serialVersionUID = 1L;
+	
+	@Id
+	@Column(name = "ers_user_id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int userId;
+	
+	@Column(name = "ers_username", nullable = false, unique = true)
 	private String username;
+	
+	@Column(name = "ers_user_password")
 	private String password;
+	
+	@Column(name = "ers_user_first_name")
 	private String firstName;
+	
+	@Column(name = "ers_user_last_name")
 	private String lastName;
+	
+	@Column(name = "ers_user_email")
 	private String email;
-	private LocalDateTime hireDate;
+	
+	@Column(name = "ers_user_hire_date")
+	private LocalDate hireDate;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name="ers_user_role_id", referencedColumnName = "ers_role_id")
 	private UserRole userRole;
 
 	public User() {
@@ -17,7 +50,7 @@ public class User {
 	}
 
 	public User(int userId, String username, String password, String firstName, String lastName, String email,
-			LocalDateTime hireDate, UserRole userRole) {
+			LocalDate hireDate, UserRole userRole) {
 		super();
 		this.userId = userId;
 		this.username = username;
@@ -77,11 +110,11 @@ public class User {
 		this.email = email;
 	}
 
-	public LocalDateTime getHireDate() {
+	public LocalDate getHireDate() {
 		return hireDate;
 	}
 
-	public void setHireDate(LocalDateTime hireDate) {
+	public void setHireDate(LocalDate hireDate) {
 		this.hireDate = hireDate;
 	}
 

@@ -1,6 +1,6 @@
 package com.revature.services;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,6 +42,7 @@ public class UserServiceImpl implements UserService {
 		User user = null;
 		try {
 			user = userDao.selectUserByUsername(username);
+			
 			log.info("Addition successful");
 		} catch (Exception e) {
 			log.warn("Error in getUserByUsername. Stack Trace: ", e);
@@ -102,7 +103,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User convertToUser(UserBean b) {
-		return new User(b.getUserId(), b.getUsername(), b.getPassword(), b.getFirstName(), b.getLastName(), b.getEmail(), LocalDateTime.parse(b.getHireDate()), new UserRole(b.getUserRoleId(), null));
+		return new User(b.getUserId(), b.getUsername(), b.getPassword(), b.getFirstName(), b.getLastName(), b.getEmail(), LocalDate.parse(b.getHireDate()), new UserRole(b.getUserRoleId(), null));
 	}
 
 }
