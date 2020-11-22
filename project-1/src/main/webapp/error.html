@@ -81,6 +81,7 @@
     <i class="fas fa-bomb"></i>
     <h1 id="status-code">ERROR</h1>
     <p id="message">text</p>
+    <p id="reason">more text</p>
 </div>
 <br>
 <button id="go-back-btn">GO BACK</button>
@@ -88,14 +89,30 @@
 <script>
     var code = document.getElementById('status-code');
     var message = document.getElementById('message');
-
-    window.onload = function() {
-        code.innerHTML = "";
-        code.innerHTML = "000-MyCustomErrorCode";
-
-        message.innerHTML = "";
-        message.innerHTML = "ajkdkjahkjd ajdhkjs fakds";
+    var cause = document.getElementById('reason');
+    //clear any previous content
+    code.innerHTML = "";
+    message.innerHTML = "";
+    cause.innerHTML = "";
+    //convert response json data into javascript object
+    var xhr = new XMLHttpRequest();
+    window.onload = function(){
+    	if(xhr.status == 200){
+    		console.log('error being parsed...');
+    		var data = JSON.parse(xhr.responseText);
+    		code.innerHTML = data.status_code;
+    		message.innerHTML = data.message;
+    		cause.innerHTML = data.stack_trace;
+    	}
     };
+    //display data into browser elements
+//     window.onload = function() {
+
+//         code.innerHTML = "000-MyCustomErrorCode";
+
+//         
+//         message.innerHTML = "ajkdkjahkjd ajdhkjs fakds";
+//     };
 
     var backBtn = document.getElementById('go-back-btn');
 

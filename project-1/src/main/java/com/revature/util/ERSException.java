@@ -19,5 +19,4 @@ public class ERSException extends RuntimeException{
 	public ERSException(String message, Throwable cause) {
 		super(message, cause);
 	}
-
 }

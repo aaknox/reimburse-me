@@ -1,14 +1,11 @@
 package com.revature.services;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import com.revature.beans.UserBean;
 import com.revature.models.User;
-import com.revature.models.UserRole;
 import com.revature.repositories.UserDaoImpl;
 
 public class UserServiceImpl implements UserService {
@@ -43,7 +40,7 @@ public class UserServiceImpl implements UserService {
 		try {
 			user = userDao.selectUserByUsername(username);
 			
-			log.info("Addition successful");
+			log.info("Retrieval successful");
 		} catch (Exception e) {
 			log.warn("Error in getUserByUsername. Stack Trace: ", e);
 		}
@@ -93,17 +90,6 @@ public class UserServiceImpl implements UserService {
 		} catch (Exception e) {
 			log.warn("Error in deleteUser. Stack Trace: ", e);
 		}
-	}
-
-	@Override
-	public UserBean convertToUserBean(User u) {
-		return new UserBean(u.getUserId(), u.getUsername(), u.getPassword(), u.getFirstName(), u.getLastName(),
-				u.getEmail(), u.getHireDate().toString(), u.getUserRole().getRoleId());
-	}
-
-	@Override
-	public User convertToUser(UserBean b) {
-		return new User(b.getUserId(), b.getUsername(), b.getPassword(), b.getFirstName(), b.getLastName(), b.getEmail(), LocalDate.parse(b.getHireDate()), new UserRole(b.getUserRoleId(), null));
 	}
 
 }

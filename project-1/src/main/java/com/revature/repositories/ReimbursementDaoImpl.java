@@ -26,21 +26,17 @@ public class ReimbursementDaoImpl implements ReimbursementDao {
 
 		tx.commit();
 
-		session.close();
-
 	}
 
 	@Override
 	public List<Reimbursement> selectAllReimbursements() {
 		List<Reimbursement> reimbList = session.createQuery("from Reimbursement", Reimbursement.class).list();
-		session.close();
 		return reimbList;
 	}
 
 	@Override
 	public Reimbursement selectReimbursementById(int id) {
 		Reimbursement reimb = session.get(Reimbursement.class, id);
-		session.close();
 		return reimb;
 	}
 
@@ -48,7 +44,6 @@ public class ReimbursementDaoImpl implements ReimbursementDao {
 	public List<Reimbursement> selectReimbursementsByStatusId(int sId) {
 		List<Reimbursement> reimbList = session
 				.createQuery("from Reimbursement where status.getStatusId()='" + sId + "'", Reimbursement.class).list();
-		session.close();
 		return reimbList;
 	}
 
@@ -56,7 +51,6 @@ public class ReimbursementDaoImpl implements ReimbursementDao {
 	public List<Reimbursement> selectReimbursementsByStatusName(String statusName) {
 		List<Reimbursement> reimbList = session.createQuery(
 				"from Reimbursement where status.getStatusName()='" + statusName + "'", Reimbursement.class).list();
-		session.close();
 		return reimbList;
 	}
 
@@ -71,8 +65,6 @@ public class ReimbursementDaoImpl implements ReimbursementDao {
 		}
 
 		tx.commit();
-
-		session.close();
 	}
 
 	@Override
@@ -86,8 +78,6 @@ public class ReimbursementDaoImpl implements ReimbursementDao {
 		}
 
 		tx.commit();
-
-		session.close();
 
 	}
 

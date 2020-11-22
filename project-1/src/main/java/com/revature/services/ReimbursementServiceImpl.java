@@ -2,7 +2,6 @@ package com.revature.services;
 
 import java.util.List;
 
-import com.revature.beans.ReimbursementBean;
 import com.revature.models.Reimbursement;
 
 public class ReimbursementServiceImpl implements ReimbursementService {
@@ -35,18 +34,6 @@ public class ReimbursementServiceImpl implements ReimbursementService {
 	public void deleteReimbursement(Reimbursement r) {
 		// TODO Auto-generated method stub
 
-	}
-
-	@Override
-	public ReimbursementBean convertToReimbursementBean(Reimbursement r) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Reimbursement convertToReimbursement(ReimbursementBean b) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }

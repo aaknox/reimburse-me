@@ -31,7 +31,5 @@
 		<!-- add classes to map from here... -->
 		<mapping class="com.revature.models.User" />
 		<mapping class="com.revature.models.UserRole" />
-		<mapping class="com.revature.beans.UserBean" />
-		<mapping class="com.revature.beans.UserRoleBean" />
 	</session-factory>
 </hibernate-configuration>

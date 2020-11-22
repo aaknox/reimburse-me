@@ -10,31 +10,26 @@
 	</context-param>
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
-		<welcome-file>index.htm</welcome-file>
-		<welcome-file>index.jsp</welcome-file>
-		<welcome-file>default.html</welcome-file>
-		<welcome-file>default.htm</welcome-file>
-		<welcome-file>default.jsp</welcome-file>
 	</welcome-file-list>
 	<servlet>
 		<description></description>
-		<display-name>MasterForwardingServlet</display-name>
-		<servlet-name>MasterForwardingServlet</servlet-name>
-		<servlet-class>com.revature.mastercontrollers.MasterForwardingServlet</servlet-class>
+		<display-name>LoginServlet</display-name>
+		<servlet-name>LoginServlet</servlet-name>
+		<servlet-class>com.revature.servlets.LoginServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>MasterForwardingServlet</servlet-name>
-		<url-pattern>/reimburse-me/*</url-pattern>
+		<servlet-name>LoginServlet</servlet-name>
+		<url-pattern>/reimburse-me/login</url-pattern>
 	</servlet-mapping>
-	<servlet>
-		<description></description>
-		<display-name>MasterBackControllerServlet</display-name>
-		<servlet-name>MasterBackControllerServlet</servlet-name>
-		<servlet-class>com.revature.mastercontrollers.MasterBackControllerServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>MasterBackControllerServlet</servlet-name>
-		<url-pattern>/api/*</url-pattern>
-		<url-pattern>/logout</url-pattern>
-	</servlet-mapping>
+<!-- 	<servlet> -->
+<!-- 		<description></description> -->
+<!-- 		<display-name>MasterBackControllerServlet</display-name> -->
+<!-- 		<servlet-name>MasterBackControllerServlet</servlet-name> -->
+<!-- 		<servlet-class>com.revature.mastercontrollers.MasterBackControllerServlet</servlet-class> -->
+<!-- 	</servlet> -->
+<!-- 	<servlet-mapping> -->
+<!-- 		<servlet-name>MasterBackControllerServlet</servlet-name> -->
+<!-- 		<url-pattern>/api/*</url-pattern> -->
+<!-- 		<url-pattern>/logout</url-pattern> -->
+<!-- 	</servlet-mapping> -->
 </web-app>

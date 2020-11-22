@@ -148,9 +148,8 @@ SELECT * FROM ers_reimbursements_types ORDER BY type_id;
 /*******************************************************************************
  * 			UPDATE/SELECT/DELETE STATEMENTS (COMMENTED OUT - FOR TESTING ONLY)
  *******************************************************************************/
-
-
-
+--DELETE FROM ers_users WHERE ers_user_id = 7;
+UPDATE ers_users SET ers_user_password = 'password' WHERE ers_username = 'aaknox';
 
 /************************************************************
  * 							END OF SCRIPT                   *

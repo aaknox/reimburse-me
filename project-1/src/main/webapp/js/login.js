@@ -1,60 +1,32 @@
-console.log('index.html loaded...');
+const login = () => {
+    console.log('starting login function...')
+    var t_username = document.getElementById('username').value;
+    var t_password = document.getElementById('password').value;
+    console.log(`User logging in with username as ${t_username} and password as ${t_password}`);
+    const data = {
+        username: t_username,
+        password: t_password
+    };
 
-var postBtn = document.getElementById('post-req');
-var givenUserName = document.getElementById('username').value;
-var givenPassword = document.getElementById('password').value;
+    const xhr = new XMLHttpRequest();
 
-const sendHttpRequest = (method, url, data) => {
-    //implement promise object
-    const promise = new Promise((resolve, reject) => {
-        //step 1: create request
-        var xhr = new XMLHttpRequest();
-        //step 2: prepare to send request by 
-        //FIRST opening request for client-side modification
-        xhr.open(method, url);
-
-        xhr.responseType = 'json';
-
-        //if data is present (truthy)
-        if (data) {
-            xhr.setRequestHeader('Content-Type', 'application/json')
+    xhr.addEventListener("readystatechange", function() {
+        if (this.readyState == 4 && this.status == 200) {
+            console.log(this.responseText);
+            window.localStorage.removeItem('currentUser');
+            window.localStorage.setItem('currentUser', t_username);
+        } else if (this.status >= 400) {
+            console.log('ERROR!!');
         }
-        //step 3: set a event listener to...access our data from resource
-        //aka get JSON data from API
-        xhr.onload = function() {
-            if (xhr.status >= 300) {
-                reject(xhr.response);
-            } else {
-                resolve(xhr.response);
-            }
-        };
-
-        //step 3B: handle errors
-        xhr.onerror = function() {
-            reject("Azhya, something went wrong!");
-        };
-        //step 4: send the now-configured request to its destination
-        //you can append data to request by passing it inside send()
-        //note JavaScript data must be converted into JSON 
-        //to transfer data in request
-        xhr.send(JSON.stringify(data));
-
     });
-    return promise;
+
+    xhr.open("POST", "https://localhost:8080/reimburse-me/login");
+    xhr.setRequestHeader("content-type", "application/json");
+    xhr.setRequestHeader("\"username\"", `'${data.username}'`);
+    xhr.setRequestHeader("\"password\"", `'${data.password}'`);
+
+    xhr.send(data);
+    console.log('ending login function...')
 };
 
-const sendData = () => {
-    console.log('starting to send request to server');
-    sendHttpRequest('POST', 'http://localhost:8080/project-1/reimburse-me/login', {
-        username: givenUserName,
-        password: givenPassword
-    }).then(responseData => {
-        console.log('successful login')
-        console.log(responseData);
-    }).catch(err => {
-        console.log('bad login')
-        console.log(err);
-    });
-};
-
-postBtn.addEventListener('submit', sendData);
+document.getElementById('post-req').addEventListener('submit', login);

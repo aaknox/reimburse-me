@@ -29,19 +29,19 @@ public class User implements Serializable{
 	@Column(name = "ers_user_password")
 	private String password;
 	
-	@Column(name = "ers_user_first_name")
+	@Column(name = "ers_user_first_name", nullable = false)
 	private String firstName;
 	
-	@Column(name = "ers_user_last_name")
+	@Column(name = "ers_user_last_name", nullable = false)
 	private String lastName;
 	
-	@Column(name = "ers_user_email")
+	@Column(name = "ers_user_email", nullable = false)
 	private String email;
 	
-	@Column(name = "ers_user_hire_date")
+	@Column(name = "ers_user_hire_date", nullable = false)
 	private LocalDate hireDate;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne
 	@JoinColumn(name="ers_user_role_id", referencedColumnName = "ers_role_id")
 	private UserRole userRole;
 
@@ -53,6 +53,18 @@ public class User implements Serializable{
 			LocalDate hireDate, UserRole userRole) {
 		super();
 		this.userId = userId;
+		this.username = username;
+		this.password = password;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.hireDate = hireDate;
+		this.userRole = userRole;
+	}
+
+	public User(String username, String password, String firstName, String lastName, String email, LocalDate hireDate,
+			UserRole userRole) {
+		super();
 		this.username = username;
 		this.password = password;
 		this.firstName = firstName;

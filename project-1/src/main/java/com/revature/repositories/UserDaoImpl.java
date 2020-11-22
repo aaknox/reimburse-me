@@ -3,13 +3,9 @@ package com.revature.repositories;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Query;
-
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 
-import com.revature.beans.UserBean;
-import com.revature.models.Reimbursement;
 import com.revature.models.User;
 import com.revature.util.HibernateUtil;
 
@@ -28,27 +24,24 @@ public class UserDaoImpl implements UserDao {
 		}
 
 		session.getTransaction().commit();
-		
-		session.close();
 	}
 
 	@Override
 	public List<User> selectAllUsers() {
 		List<User> userList = new ArrayList<User>();
 		try {
-			userList = session.createQuery("SELECT * FROM User ORDER BY userId", User.class).getResultList();
+			userList = session.createQuery("FROM User ORDER BY userId", User.class).getResultList();
 
 		} catch (Exception e) {
 			log.warn("Failed to find all users in database. Stack Trace: ", e);
 		}
-		session.close();
 		return userList;
 	}
 
 	@Override
 	public User selectUserByUsername(String username) {
 		User user = null;
-		
+
 		try {
 			List<User> userList = session.createQuery("from User where username='" + username + "'", User.class).list();
 			user = userList.get(0);
@@ -56,7 +49,6 @@ public class UserDaoImpl implements UserDao {
 		} catch (Exception e) {
 			log.warn("Failed to find user by username in database. Stack Trace: ", e);
 		}
-		session.close();
 		return user;
 	}
 
@@ -71,26 +63,34 @@ public class UserDaoImpl implements UserDao {
 		}
 
 		session.getTransaction().commit();
-		session.close();
 	}
 
 	@Override
 	public void updatePassword(String username, String password) {
 		User user = null;
+
 		session.beginTransaction();
 		try {
-			user = session.get(User.class, username);
-			if (user != null) {
-				// update password
-				user.setPassword(password);
-				session.update(user);
+			List<User> list = session.createQuery("from User where username='" + username + "'", User.class).list();
+
+			if (list.size() == 0) {
+				log.warn("PANIC!");
+				throw new NullPointerException();
+			} else {
+				user = list.get(0);
+				if (user != null) {
+					// update password
+					user.setPassword(password);
+					session.update(user);
+					log.info("Password has been updated!");
+				}
 			}
+
 		} catch (Exception e) {
-			log.warn("Failed to update user by id in database. Stack Trace: ", e);
+			log.warn("Failed to update user password in database. Stack Trace: ", e);
 		}
 
 		session.getTransaction().commit();
-		session.close();
 	}
 
 	@Override
@@ -100,12 +100,12 @@ public class UserDaoImpl implements UserDao {
 		try {
 			log.info("removing user, " + user);
 			session.delete(user);
+			log.info("Removal of user was successful.");
 		} catch (Exception e) {
-			log.warn("Failed to update user by id in database. Stack Trace: ", e);
+			log.warn("Failed to remove user from database. Stack Trace: ", e);
 		}
 
 		session.getTransaction().commit();
-		session.close();
 
 	}
 
