@@ -3,20 +3,19 @@
 	<session-factory>
 		<!-- Setting the schema namespace -->
 		<property name="hibernate.default_schema">public</property>
-
+		
 		<!-- Show SQL on stdout -->
 		<property name="hibernate.show_sql">false</property>
 		<property name="hibernate.format_sql">false</property>
-
 		<!-- Postgres connections -->
 		<property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect
 		</property>
 		<property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
-		
+
 		<!-- hbm2ddl.auto is a hibernate property that exports schema DDL to the 
 			database when the SessionFactory is created -->
 		<property name="hibernate.hbm2ddl.auto">validate</property>
-		
+
 		<!-- Offline DB Credentials -->
 		<property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/employee-reimbursement-db
 		</property>

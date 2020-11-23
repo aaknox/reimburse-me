@@ -16,8 +16,6 @@ public interface ReimbursementDao {
 		
 		public List<Reimbursement> selectReimbursementsByStatusId(int sId);
 		
-		public List<Reimbursement> selectReimbursementsByStatusName(String statusName);
-		
 		
 		// update
 		public void updateReimbursement(Reimbursement reimb);

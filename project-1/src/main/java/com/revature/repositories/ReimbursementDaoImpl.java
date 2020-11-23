@@ -41,16 +41,9 @@ public class ReimbursementDaoImpl implements ReimbursementDao {
 	}
 
 	@Override
-	public List<Reimbursement> selectReimbursementsByStatusId(int sId) {
-		List<Reimbursement> reimbList = session
-				.createQuery("from Reimbursement where status.getStatusId()='" + sId + "'", Reimbursement.class).list();
-		return reimbList;
-	}
-
-	@Override
-	public List<Reimbursement> selectReimbursementsByStatusName(String statusName) {
-		List<Reimbursement> reimbList = session.createQuery(
-				"from Reimbursement where status.getStatusName()='" + statusName + "'", Reimbursement.class).list();
+	public List<Reimbursement> selectReimbursementsByStatusId(int statusId) {
+		List<Reimbursement> reimbList = session.createNativeQuery(
+				"Select * from ers_reimbursements where reimb_status_id ='" + statusId + "'", Reimbursement.class).list();
 		return reimbList;
 	}
 

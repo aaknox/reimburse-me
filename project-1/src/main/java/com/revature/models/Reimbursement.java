@@ -13,7 +13,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
@@ -21,10 +20,8 @@ import javax.persistence.Table;
 public class Reimbursement implements Serializable {
 	private static final long serialVersionUID = 1L;
 	// fields
-
 	@Id
-	@SequenceGenerator(name="reimb_sequence", sequenceName="reimb_sequence")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="reimb_sequence")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "reimb_id")
 	private int rId;
 

@@ -27,6 +27,7 @@ DROP SEQUENCE IF EXISTS reimb_sequence;
 /************************************************************
  * 			CREATE TABLES / ADD CONSTRAINTS
  ************************************************************/
+
 CREATE TABLE ers_users(
 	ers_user_id serial PRIMARY KEY,
 	ers_user_role_id int NOT NULL,
@@ -49,8 +50,13 @@ ADD CONSTRAINT fk_constraint_usersToUserRoles
 FOREIGN KEY (ers_user_role_id)
 REFERENCES ers_user_roles (ers_role_id);
 
+--create sequence for reimbursement id 
+CREATE SEQUENCE reimb_sequence
+INCREMENT 100
+START 100;
+
 CREATE TABLE ers_reimbursements(
-	reimb_id int PRIMARY KEY,
+	reimb_id int PRIMARY KEY DEFAULT nextval('reimb_sequence'),
 	reimb_amount decimal(10, 2),
 	reimb_submitted timestamp,
 	reimb_resolved timestamp,
@@ -62,10 +68,8 @@ CREATE TABLE ers_reimbursements(
 	reimb_type_id int
 );
 
---create sequence for reimbursement id
-CREATE SEQUENCE reimb_sequence
-INCREMENT 100
-START 100
+--alter sequence to be owned by reimbursement id 
+ALTER SEQUENCE reimb_sequence
 OWNED BY ers_reimbursements.reimb_id;
 
 CREATE TABLE ers_reimbursements_status(
@@ -133,9 +137,12 @@ INSERT INTO ers_reimbursements_status(status_name) VALUES ('PENDING');
 INSERT INTO ers_reimbursements_status(status_name) VALUES ('DENIED');
 
 -- ers_reimbursements table data
-INSERT INTO ers_reimbursements VALUES (nextval('reimb_sequence'), 100.50, '2020-04-01 14:25:06', NULL, 'for company cruise trip', 'myreceipt.jpg', 1, NULL, 2, 2);
-INSERT INTO ers_reimbursements VALUES (nextval('reimb_sequence'), 250.00, '2020-06-26 19:30:26', NULL, 'for 2020 devops convention', 'hotel-receipt.png', 2, NULL, 2, 1);
-INSERT INTO ers_reimbursements VALUES (nextval('reimb_sequence'), 600.75, '2020-09-14 09:47:33', NULL, 'for crazy office party', 'xxxreceipt.jpg', 1, NULL, 2, 4);
+INSERT INTO ers_reimbursements(reimb_amount, reimb_submitted, reimb_resolved, reimb_description, reimb_receipt, reimb_author_id, reimb_resolver_id, reimb_status_id, reimb_type_id) 
+VALUES (100.50, '2020-04-01 14:25:06', NULL, 'for company cruise trip', 'myreceipt.jpg', 1, NULL, 2, 2);
+INSERT INTO ers_reimbursements(reimb_amount, reimb_submitted, reimb_resolved, reimb_description, reimb_receipt, reimb_author_id, reimb_resolver_id, reimb_status_id, reimb_type_id)
+VALUES (250.00, '2020-06-26 19:30:26', NULL, 'for 2020 devops convention', 'hotel-receipt.png', 2, NULL, 2, 1);
+INSERT INTO ers_reimbursements(reimb_amount, reimb_submitted, reimb_resolved, reimb_description, reimb_receipt, reimb_author_id, reimb_resolver_id, reimb_status_id, reimb_type_id)
+VALUES (600.75, '2020-09-14 09:47:33', NULL, 'for crazy office party', 'xxxreceipt.jpg', 1, NULL, 2, 4);
 
 /************************************************************
  * 			SELECT ALL STATEMENTS
@@ -150,8 +157,7 @@ SELECT * FROM ers_reimbursements_types ORDER BY type_id;
  *******************************************************************************/
 --DELETE FROM ers_users WHERE ers_user_id = 7;
 --UPDATE ers_users SET ers_user_password = 'password' WHERE ers_username = 'aaknox';
---DELETE FROM ers_reimbursements WHERE reimb_id = 400;
-
+--DELETE FROM ers_reimbursements WHERE reimb_id > 300;
 /************************************************************
  * 							END OF SCRIPT                   *
  ************************************************************/
