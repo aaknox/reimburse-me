@@ -1,35 +1,95 @@
 package com.revature.models;
 
+import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 
-public class Reimbursement {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "ers_reimbursements")
+public class Reimbursement implements Serializable {
+	private static final long serialVersionUID = 1L;
 	// fields
+
+	@Id
+	@SequenceGenerator(name="reimb_sequence", sequenceName="reimb_sequence")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="reimb_sequence")
+	@Column(name = "reimb_id")
 	private int rId;
-	private int amount;
+
+	@Column(name = "reimb_amount")
+	private BigDecimal amount;
+
+	@Column(name = "reimb_submitted")
 	private LocalDateTime submissionDateTime;
+
+	@Column(name = "reimb_resolved")
 	private LocalDateTime resolutionDateTime;
-	private String receiptFilePath;
-	private int authorId;
-	private int resolverId;
+
+	@Column(name = "reimb_description")
+	private String description;
+
+	@Column(name = "reimb_receipt")
+	private byte[] receipt;
+
+	@OneToOne(targetEntity = User.class)
+	@JoinColumn(name = "reimb_author_id", referencedColumnName = "ers_user_id")
+	private User author = new User();
+
+	@OneToOne(targetEntity = User.class)
+	@JoinColumn(name = "reimb_resolver_id", referencedColumnName = "ers_user_id")
+	private User resolver = new User();
+
+	@ManyToOne
+	@JoinColumn(name = "reimb_status_id", referencedColumnName = "status_id")
 	private ReimbursementStatus status;
+
+	@ManyToOne
+	@JoinColumn(name = "reimb_type_id", referencedColumnName = "type_id")
 	private ReimbursementType type;
-	
-	
 
 	public Reimbursement() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Reimbursement(int rId, int amount, LocalDateTime submissionDateTime, LocalDateTime resolutionDateTime,
-			String receiptFilePath, int authorId, int resolverId, ReimbursementStatus status, ReimbursementType type) {
+	public Reimbursement(int rId, BigDecimal amount, LocalDateTime submissionDateTime, LocalDateTime resolutionDateTime,
+			String description, byte[] receipt, User author, User resolver, ReimbursementStatus status,
+			ReimbursementType type) {
 		super();
 		this.rId = rId;
 		this.amount = amount;
 		this.submissionDateTime = submissionDateTime;
 		this.resolutionDateTime = resolutionDateTime;
-		this.receiptFilePath = receiptFilePath;
-		this.authorId = authorId;
-		this.resolverId = resolverId;
+		this.description = description;
+		this.receipt = receipt;
+		this.author = author;
+		this.resolver = resolver;
+		this.status = status;
+		this.type = type;
+	}
+
+	public Reimbursement(BigDecimal amount, LocalDateTime submissionDateTime, LocalDateTime resolutionDateTime,
+			String description, byte[] receipt, User author, User resolver, ReimbursementStatus status,
+			ReimbursementType type) {
+		super();
+		this.amount = amount;
+		this.submissionDateTime = submissionDateTime;
+		this.resolutionDateTime = resolutionDateTime;
+		this.description = description;
+		this.receipt = receipt;
+		this.author = author;
+		this.resolver = resolver;
 		this.status = status;
 		this.type = type;
 	}
@@ -42,11 +102,11 @@ public class Reimbursement {
 		this.rId = rId;
 	}
 
-	public int getAmount() {
+	public BigDecimal getAmount() {
 		return amount;
 	}
 
-	public void setAmount(int amount) {
+	public void setAmount(BigDecimal amount) {
 		this.amount = amount;
 	}
 
@@ -66,28 +126,36 @@ public class Reimbursement {
 		this.resolutionDateTime = resolutionDateTime;
 	}
 
-	public String getReceiptFilePath() {
-		return receiptFilePath;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setReceiptFilePath(String receiptFilePath) {
-		this.receiptFilePath = receiptFilePath;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
-	public int getAuthorId() {
-		return authorId;
+	public byte[] getReceipt() {
+		return receipt;
 	}
 
-	public void setAuthorId(int authorId) {
-		this.authorId = authorId;
+	public void setReceipt(byte[] receipt) {
+		this.receipt = receipt;
 	}
 
-	public int getResolverId() {
-		return resolverId;
+	public User getAuthor() {
+		return author;
 	}
 
-	public void setResolverId(int resolverId) {
-		this.resolverId = resolverId;
+	public void setAuthor(User author) {
+		this.author = author;
+	}
+
+	public User getResolver() {
+		return resolver;
+	}
+
+	public void setResolver(User resolver) {
+		this.resolver = resolver;
 	}
 
 	public ReimbursementStatus getStatus() {
@@ -106,16 +174,21 @@ public class Reimbursement {
 		this.type = type;
 	}
 
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + amount;
-		result = prime * result + authorId;
+		result = prime * result + ((amount == null) ? 0 : amount.hashCode());
+		result = prime * result + ((author == null) ? 0 : author.hashCode());
+		result = prime * result + ((description == null) ? 0 : description.hashCode());
 		result = prime * result + rId;
-		result = prime * result + ((receiptFilePath == null) ? 0 : receiptFilePath.hashCode());
+		result = prime * result + Arrays.hashCode(receipt);
 		result = prime * result + ((resolutionDateTime == null) ? 0 : resolutionDateTime.hashCode());
-		result = prime * result + resolverId;
+		result = prime * result + ((resolver == null) ? 0 : resolver.hashCode());
 		result = prime * result + ((status == null) ? 0 : status.hashCode());
 		result = prime * result + ((submissionDateTime == null) ? 0 : submissionDateTime.hashCode());
 		result = prime * result + ((type == null) ? 0 : type.hashCode());
@@ -131,23 +204,34 @@ public class Reimbursement {
 		if (getClass() != obj.getClass())
 			return false;
 		Reimbursement other = (Reimbursement) obj;
-		if (amount != other.amount)
+		if (amount == null) {
+			if (other.amount != null)
+				return false;
+		} else if (!amount.equals(other.amount))
 			return false;
-		if (authorId != other.authorId)
+		if (author == null) {
+			if (other.author != null)
+				return false;
+		} else if (!author.equals(other.author))
+			return false;
+		if (description == null) {
+			if (other.description != null)
+				return false;
+		} else if (!description.equals(other.description))
 			return false;
 		if (rId != other.rId)
 			return false;
-		if (receiptFilePath == null) {
-			if (other.receiptFilePath != null)
-				return false;
-		} else if (!receiptFilePath.equals(other.receiptFilePath))
+		if (!Arrays.equals(receipt, other.receipt))
 			return false;
 		if (resolutionDateTime == null) {
 			if (other.resolutionDateTime != null)
 				return false;
 		} else if (!resolutionDateTime.equals(other.resolutionDateTime))
 			return false;
-		if (resolverId != other.resolverId)
+		if (resolver == null) {
+			if (other.resolver != null)
+				return false;
+		} else if (!resolver.equals(other.resolver))
 			return false;
 		if (status == null) {
 			if (other.status != null)
@@ -170,8 +254,9 @@ public class Reimbursement {
 	@Override
 	public String toString() {
 		return "Reimbursement [rId=" + rId + ", amount=" + amount + ", submissionDateTime=" + submissionDateTime
-				+ ", resolutionDateTime=" + resolutionDateTime + ", receiptFilePath=" + receiptFilePath + ", authorId="
-				+ authorId + ", resolverId=" + resolverId + ", status=" + status + ", type=" + type + "]";
+				+ ", resolutionDateTime=" + resolutionDateTime + ", description=" + description + ", receipt="
+				+ Arrays.toString(receipt) + ", author=" + author + ", resolver=" + resolver + ", status=" + status
+				+ ", type=" + type + "]";
 	}
 
 }

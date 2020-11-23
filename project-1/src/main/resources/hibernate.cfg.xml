@@ -31,5 +31,8 @@
 		<!-- add classes to map from here... -->
 		<mapping class="com.revature.models.User" />
 		<mapping class="com.revature.models.UserRole" />
+		<mapping class="com.revature.models.Reimbursement" />
+		<mapping class="com.revature.models.ReimbursementStatus" />
+		<mapping class="com.revature.models.ReimbursementType" />
 	</session-factory>
 </hibernate-configuration>

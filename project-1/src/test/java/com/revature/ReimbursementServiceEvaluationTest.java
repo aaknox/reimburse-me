@@ -1,34 +1,92 @@
 package com.revature;
 
-import static org.junit.Assert.*;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.List;
+
+import org.apache.log4j.BasicConfigurator;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
+import com.revature.models.Reimbursement;
+import com.revature.models.ReimbursementStatus;
+import com.revature.models.ReimbursementType;
+import com.revature.models.User;
 import com.revature.repositories.ReimbursementDaoImpl;
+import com.revature.repositories.UserDaoImpl;
 import com.revature.services.ReimbursementServiceImpl;
-import com.revature.util.HibernateUtil;
+import com.revature.services.UserServiceImpl;
 
 public class ReimbursementServiceEvaluationTest {
-	@InjectMocks
-	HibernateUtil util;
 	
 	@InjectMocks
 	ReimbursementServiceImpl service;
 	
+	@InjectMocks
+	UserServiceImpl userService;
+	
+	@Mock
+	UserDaoImpl userDaoMock;
+	
 	@Mock
 	ReimbursementDaoImpl daoMock;
-
+	
 	@Before
 	public void setUp() throws Exception {
-		this.sessionMock = mock(MySession.class);
+		// TODO: Make real unit tests using Mockito to mock DAOs for Service layer
+		// MAKE SURE YOU START TOMCAT BEFORE RUNNING JUNIT TEST
+		BasicConfigurator.configure();
+		service = new ReimbursementServiceImpl();
+		MockitoAnnotations.initMocks(this);
 	}
 
 	@Test
-	public void test() {
-		fail("Not yet implemented");
+	public void testAddReimbursement() {
+		User author = userService.getUserByUsername("employee001");
+		Reimbursement test = new Reimbursement(
+					BigDecimal.valueOf(123.45),
+					LocalDateTime.now(),
+					null,
+					"another office party",
+					null,
+					author,
+					null,
+					new ReimbursementStatus(2, "PENDING"),
+					new ReimbursementType(4, "OTHER")
+				);
+		Reimbursement test2 = new Reimbursement(
+				BigDecimal.valueOf(75.50),
+				LocalDateTime.now(),
+				null,
+				"travel expenses to state convention",
+				null,
+				author,
+				null,
+				new ReimbursementStatus(2, "PENDING"),
+				new ReimbursementType(2, "TRAVEL")
+			);
+		List<Reimbursement> list = service.getAllReimbursements();
+		System.out.println("---------------BEFORE ADDITION-------------");
+		for (Reimbursement reimbursement : list) {
+			System.out.println(reimbursement);
+		}
+		System.out.println("-------------------------------------------");
+		
+		//run test
+		service.addReimbursement(test);
+		service.addReimbursement(test2);
+		
+		//verify
+		List<Reimbursement> list2 = service.getAllReimbursements();
+		System.out.println("---------------AFTER ADDITION-------------");
+		for (Reimbursement reimbursement : list2) {
+			System.out.println(reimbursement);
+		}
+		System.out.println("-------------------------------------------");
 	}
 
 }

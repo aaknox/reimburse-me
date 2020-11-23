@@ -1,8 +1,26 @@
 package com.revature.models;
 
-public class ReimbursementType {
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "ers_reimbursements_types")
+public class ReimbursementType implements Serializable {
+	private static final long serialVersionUID = 1L;
 	// fields
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "type_id")
 	private int typeId;
+	
+	@Column(name = "type_name")
 	private String typeName;
 
 	public ReimbursementType() {
@@ -12,6 +30,11 @@ public class ReimbursementType {
 	public ReimbursementType(int typeId, String typeName) {
 		super();
 		this.typeId = typeId;
+		this.typeName = typeName;
+	}
+
+	public ReimbursementType(String typeName) {
+		super();
 		this.typeName = typeName;
 	}
 
@@ -29,6 +52,10 @@ public class ReimbursementType {
 
 	public void setTypeName(String typeName) {
 		this.typeName = typeName;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 	@Override
