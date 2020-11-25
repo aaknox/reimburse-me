@@ -21,6 +21,7 @@ public class RequestHelper {
 	private static ObjectMapper om = new ObjectMapper();
 	private static UserServiceImpl userService = new UserServiceImpl();
 	public static void processLogin(HttpServletRequest req, HttpServletResponse res) throws IOException {
+		log.info("inside of request helper...processLogin...");
 		BufferedReader reader = req.getReader();
 		StringBuilder s = new StringBuilder();
 		
@@ -61,6 +62,7 @@ public class RequestHelper {
 			res.setContentType("application/json");
 			res.setStatus(204); // this means that the connection was successful but no user found!
 		}
+		log.info("leaving request helper now...");
 	}
 
 	public static void processLogout(HttpServletRequest req, HttpServletResponse res) throws IOException {

@@ -25,6 +25,7 @@ public class LoginServlet extends HttpServlet {
     }
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		log.info("inside of doPost of LoginServlet...");
 		// We will handle the parameters from index.html
 		String username = req.getParameter("username");
 		String password = req.getParameter("password");
@@ -47,5 +48,6 @@ public class LoginServlet extends HttpServlet {
 			pw.println("<h3 style='color:red'>Denied</h3>");
 			pw.println("<p>Username or password is incorrect</p>");
 		}
+		log.info("leaving login servlet!");
 	}
 }

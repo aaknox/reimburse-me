@@ -17,7 +17,7 @@ public class FrontController extends HttpServlet {
 	// URL Rewriting
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		final String URI = request.getRequestURI().replace("/project-1/", "");
-		
+		System.out.println("Inside of FrontController - doPost. Destination: " + URI);
 		
 		switch(URI) {
 		case "login":
@@ -35,7 +35,8 @@ public class FrontController extends HttpServlet {
 	
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
-		doPost(request, response);
+		final String URI = request.getRequestURI().replace("/project-1/", "");
+		System.out.println("Inside of FrontController - doGet. Destination: " + URI);
 	}
 
 }
