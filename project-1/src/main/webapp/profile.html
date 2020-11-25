@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>ReimburseMe! || Profile Page</title>
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link
+	href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+	rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="css/main.css">
+<script src="https://kit.fontawesome.com/b825c1b0e8.js"></script>
+</head>
+<body>
+	<h1>My Profile</h1>
+	<div id="profile-container">
+		<form id="profile-form">
+			<h3>
+				ID: <span id="user-id" class="field"></span>
+			</h3>
+			<input type="text" id="username" class="field" disabled></input>
+			<button id="update-btn">Update</button>
+			<input type="password" id="password" class="field" disabled></input>
+			<button id="update-btn">Update</button>
+			<input type="text" id="firstname" class="field" disabled></input>
+			<button id="update-btn">Update</button>
+			<input type="text" id="lastname" class="field" disabled></input>
+			<button id="update-btn">Update</button>
+			<input type="text" id="email" class="field" disabled></input>
+			<button id="update-btn">Update</button>
+			<h3>
+				Hire Date: <span id="user-hire-date" class="field"></span>
+			</h3>
+			<h3>
+				Role: <span id="user-role-name" class="field"></span> - <span id="user-role-id" class="field"></span>
+			</h3>
+			<button id="update-btn">Update</button>
+			<input type="submit" disabled value="Save Changes" disabled />
+		</form>
+	</div>
+	<script type="text/javascript">
+	let fields = document.querySelector('.field');
+	let userString = sessionStorage.getItem('currentUser');
+	
+	if(userString === null) {
+		window.location = "http://localhost:8080/project-1/home.html";
+	} else {
+		console.log(userString);
+		let currentUser = JSON.parse(userString);
+		console.log(currentUser);
+		if (currentUser != null) {
+			fields[0].innerHTML = currentUser.id;
+			fields[1].innerHTML = currentUser.username;
+			fields[2].innerHTML = currentUser.password;
+			fields[3].innerHTML = currentUser.firstName;
+			fields[4].innerHTML = currentUser.lastName;
+			fields[5].innerHTML = currentUser.email;
+			fields[6].innerHTML = currentUser.hireDate;
+			fields[7].innerHTML = currentUser.roleId;
+			fields[8].innerHTML = currentUser.roleName;
+		}
+	}
+	</script>
+</body>
+</html>

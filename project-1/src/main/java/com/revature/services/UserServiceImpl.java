@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import com.revature.models.User;
+import com.revature.models.UserDTO;
 import com.revature.repositories.UserDaoImpl;
 
 public class UserServiceImpl implements UserService {
@@ -90,6 +91,20 @@ public class UserServiceImpl implements UserService {
 		} catch (Exception e) {
 			log.warn("Error in deleteUser. Stack Trace: ", e);
 		}
+	}
+	
+	public UserDTO convertToDTO(User e) {
+		return new UserDTO(
+				e.getUserId(),
+				e.getUsername(),
+				e.getPassword(),
+				e.getFirstName(),
+				e.getLastName(), 
+				e.getEmail(),
+				e.getHireDate().toString(), 
+				e.getUserRole().getRoleId(), 
+				e.getUserRole().getRoleName()
+				);
 	}
 
 }

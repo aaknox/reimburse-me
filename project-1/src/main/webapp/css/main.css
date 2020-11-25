@@ -22,6 +22,35 @@ a {
         opacity: 1;
     }
 }
+@keyframes spin {
+  0% { 
+  	transform: rotate(0deg); 
+  }
+  100% {
+    transform: rotate(360deg); 
+  }
+}
+.hide{
+	display: none;
+}
+.show{
+	font-size: 1.2rem;
+	text-transform: uppercase;
+	font-weight: 600;
+	text-align: center;
+	margin-bottom: 5px;
+}
+.loading{
+	border: 16px solid #f3f3f3; /* Light grey */
+    border-top: 16px solid #d82111; /* Blue */
+  	border-radius: 50%;
+  	width: 120px;
+  	height: 120px;
+    z-index: 10;
+    margin: 0 auto;
+  	background: rgba(255, 255, 255, 0.5);
+  	animation: spin 2s linear infinite;
+}
 
 @keyframes fadeInUp {
     0% {

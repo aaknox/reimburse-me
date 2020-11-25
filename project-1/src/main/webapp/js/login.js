@@ -1,32 +1,64 @@
-const login = () => {
-    console.log('starting login function...')
-    var t_username = document.getElementById('username').value;
-    var t_password = document.getElementById('password').value;
-    console.log(`User logging in with username as ${t_username} and password as ${t_password}`);
-    const data = {
-        username: t_username,
-        password: t_password
-    };
+function sleep(milliseconds){
+	const date = Date.now();
+	let currentDate = null;
+	do{
+		currentDate = Date.now();
+	}while(currentDate - date < milliseconds);
+}
 
-    const xhr = new XMLHttpRequest();
-
-    xhr.addEventListener("readystatechange", function() {
-        if (this.readyState == 4 && this.status == 200) {
-            console.log(this.responseText);
-            window.localStorage.removeItem('currentUser');
-            window.localStorage.setItem('currentUser', t_username);
-        } else if (this.status >= 400) {
-            console.log('ERROR!!');
+function sendLogin()
+{
+    console.log("sendLogin() started.")
+    const loader = document.querySelector('#loader');
+	console.log(loader);
+	const displayer = document.querySelector('#displayer');
+	console.log(displayer);
+    let uName = document.getElementById("username").value;
+    let pWord = document.getElementById("password").value;
+    console.log("Username " + uName)
+    console.log("Password " + pWord)
+    let loginTemplate = {
+        username: uName,
+        password: pWord
+    }
+    //This begins AJAX workflow
+    let xhr = new XMLHttpRequest()
+    xhr.onreadystatechange = function(){
+    	console.log('ReadyState: ' + this.readyState);
+    	if(this.readyState <= 3){
+    		console.log('loading');
+    		//remove hide class from elements
+    		loader.classList.remove("hide");
+    		displayer.classList.remove("hide");
+    		//add show and loading classes to elements
+    		loader.classList.add("loading");
+    		displayer.classList.add("show");
+    	}
+        if(this.readyState === 4 && this.status === 200)
+        {
+            console.log("Success")
+            sleep(3000);
+            //add show and loading classes to elements
+            loader.classList.remove("loading");
+            displayer.classList.remove("show");
+            //remove hide class from elements
+    		loader.classList.add("hide");
+    		displayer.classList.add("hide");
+    		sleep(1000);
+            sessionStorage.setItem('currentUser', this.responseText)
+            window.location = "http://localhost:8080/project-1/home.html"
+            console.log(sessionStorage.getItem('currentUser'))
         }
-    });
-
-    xhr.open("POST", "https://localhost:8080/reimburse-me/login");
-    xhr.setRequestHeader("content-type", "application/json");
-    xhr.setRequestHeader("\"username\"", `'${data.username}'`);
-    xhr.setRequestHeader("\"password\"", `'${data.password}'`);
-
-    xhr.send(data);
-    console.log('ending login function...')
-};
-
-document.getElementById('post-req').addEventListener('submit', login);
+        if(this.readyState ===4 && this.status ===204)
+        {
+            console.log("Failed")
+            //alert("Failed to log in! Username or password is incorrect")
+            let childDiv= document.getElementById("warningText")
+            childDiv.textContent ="Failed to log in! Username or Password is incorrect"
+        }
+        console.log("Processing")
+        
+    }
+    xhr.open("POST","http://localhost:8080/project-1/login")
+    xhr.send(JSON.stringify(loginTemplate))
+}

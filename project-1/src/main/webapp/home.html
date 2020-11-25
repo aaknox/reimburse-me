@@ -35,17 +35,65 @@
         <nav>
             <ul>
                 <li><span id="welcome-message">Welcome, User!</span></li>
-                <li><a href="">View Profile</a></li>
+                <li><a onclick="profile()">View Profile</a></li>
                 <li><a href="">Need Help?</a></li>
-                <li><a href="index.html">Log Out</a></li>
+                <li><a onclick="logout()">Log Out</a></li>
             </ul>
         </nav>
     </footer>
     <script>
-        var sessionUser = window.localStorage.getItem('currentUser');
-        console.log(sessionUser);
-        let message = document.getElementById('welcome-message');
-        message.innerHTML = `Welcome, ${sessionUser}!`;
+    function logout() {
+    	console.log('logout link clicked')
+		let xhr = new XMLHttpRequest();
+		
+		xhr.open("POST", "http://localhost:8080/project-1/logout");
+		xhr.send();
+		
+		sessionStorage.removeItem('currentUser');
+		window.location = "http://localhost:8080/project-1/";
+	}
+    
+    function profile(){
+    	console.log('profile link clicked!');
+    	let xhr = new XMLHttpRequest();
+    	xhr.onreadystatechange = function(){
+    		if(this.readyState === 3){
+    			console.log('loading...')
+    		}
+            if(this.readyState === 4 && this.status === 200)
+            {
+                console.log("Found Profile!!")
+                sessionStorage.setItem('currentUser', this.responseText)
+                window.location = "http://localhost:8080/project-1/profile.html"
+                console.log(sessionStorage.getItem('currentUser'))
+            }
+            if(this.readyState ===4 && this.status ===204)
+            {
+                console.log("Failed to load profile")
+                alert("No profile can be found for this user");
+            }
+            console.log("Processing profile view...")
+            
+        }
+    	xhr.open("POST", "http://localhost:8080/project-1/user");
+    	xhr.send();
+    	
+        window.location = "http://localhost:8080/project-1/user/profile.html"
+    }
+    
+    let welcome = document.getElementById('welcome-message');
+	let userString = sessionStorage.getItem('currentUser');
+	
+	if(userString === null) {
+		window.location = "http://localhost:8080/project-1/";
+	} else {
+		console.log(userString);
+		let currentUser = JSON.parse(userString);
+		console.log(currentUser);
+		if (currentUser != null) {
+		welcome.innerHTML = "Welcome, " + currentUser.firstName + "!";
+		}
+	}
     </script>
 </body>
 

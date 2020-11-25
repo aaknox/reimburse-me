@@ -12,24 +12,15 @@
 		<welcome-file>index.html</welcome-file>
 	</welcome-file-list>
 	<servlet>
-		<description></description>
-		<display-name>LoginServlet</display-name>
-		<servlet-name>LoginServlet</servlet-name>
-		<servlet-class>com.revature.servlets.LoginServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>LoginServlet</servlet-name>
-		<url-pattern>/reimburse-me/login</url-pattern>
-	</servlet-mapping>
-<!-- 	<servlet> -->
-<!-- 		<description></description> -->
-<!-- 		<display-name>MasterBackControllerServlet</display-name> -->
-<!-- 		<servlet-name>MasterBackControllerServlet</servlet-name> -->
-<!-- 		<servlet-class>com.revature.mastercontrollers.MasterBackControllerServlet</servlet-class> -->
-<!-- 	</servlet> -->
-<!-- 	<servlet-mapping> -->
-<!-- 		<servlet-name>MasterBackControllerServlet</servlet-name> -->
-<!-- 		<url-pattern>/api/*</url-pattern> -->
-<!-- 		<url-pattern>/logout</url-pattern> -->
-<!-- 	</servlet-mapping> -->
+    <description></description>
+    <display-name>FrontController</display-name>
+    <servlet-name>FrontController</servlet-name>
+    <servlet-class>com.revature.servlets.FrontController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>FrontController</servlet-name>
+    <url-pattern>/login</url-pattern>
+    <url-pattern>/logout</url-pattern>
+    <url-pattern>/employees</url-pattern>
+  </servlet-mapping>
 </web-app>

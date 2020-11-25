@@ -16,6 +16,7 @@ html {
 html,
 body {
     animation: fadeIn 0.25s ease-in 0s 1 alternate forwards running;
+    padding-bottom: 10px !important;
 }
 
 a,
