@@ -7,7 +7,7 @@ import com.revature.models.Reimbursement;
 public interface ReimbursementDao {
 	// CRUD NETHODS ONLY
 		// create
-		public void insertReimbursement(Reimbursement reimb);
+		public int insertReimbursement(Reimbursement reimb);
 
 		// read
 		public List<Reimbursement> selectAllReimbursements();

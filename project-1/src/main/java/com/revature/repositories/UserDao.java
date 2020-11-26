@@ -13,6 +13,7 @@ public interface UserDao {
 	public List<User> selectAllUsers();
 
 	public User selectUserByUsername(String username);
+	public User selectUserByUserId(int userId);
 	
 
 	// update

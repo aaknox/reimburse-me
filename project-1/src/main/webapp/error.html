@@ -78,7 +78,7 @@
 <body>
 </body>
 <div id="container">
-    <i class="fas fa-bomb"></i>
+    <i class="fas fa-exclamation-triangle"></i>
     <h1 id="status-code">ERROR</h1>
     <p id="message">text</p>
     <p id="reason">more text</p>
@@ -95,24 +95,19 @@
     message.innerHTML = "";
     cause.innerHTML = "";
     //convert response json data into javascript object
-    var xhr = new XMLHttpRequest();
-    window.onload = function(){
-    	if(xhr.status == 200){
-    		console.log('error being parsed...');
-    		var data = JSON.parse(xhr.responseText);
-    		code.innerHTML = data.status_code;
-    		message.innerHTML = data.message;
-    		cause.innerHTML = data.stack_trace;
-    	}
-    };
-    //display data into browser elements
-//     window.onload = function() {
-
-//         code.innerHTML = "000-MyCustomErrorCode";
-
-//         
-//         message.innerHTML = "ajkdkjahkjd ajdhkjs fakds";
-//     };
+	let errorString = sessionStorage.getItem('failMessage');
+	console.log(errorString)
+	if (errorString === null) {
+		window.location = "http://localhost:8080/project-1/home.html";
+	} else {
+		let requestMessage = JSON.parse(errorString);
+		console.log(requestMessage);
+		if (requestMessage != null) {
+			code.innerText = 'ERROR_STATUS_CODE: ' + requestMessage.code;
+			message.innerText = requestMessage.issue;
+			cause.innerText = 'Please contact your administrator to resolve this issue.';
+		}
+	}
 
     var backBtn = document.getElementById('go-back-btn');
 

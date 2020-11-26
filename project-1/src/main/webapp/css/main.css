@@ -1,7 +1,6 @@
 @import "reset.css";
 @import"./index.css";
 @import "home.css";
-@import "manager-home.css";
 
 * {
     box-sizing: border-box;

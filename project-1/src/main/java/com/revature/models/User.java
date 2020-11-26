@@ -3,6 +3,7 @@ package com.revature.models;
 import java.io.Serializable;
 import java.time.LocalDate;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -40,7 +41,7 @@ public class User implements Serializable{
 	@Column(name = "ers_user_hire_date", nullable = false)
 	private LocalDate hireDate;
 	
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="ers_user_role_id", referencedColumnName = "ers_role_id")
 	private UserRole userRole;
 

@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -40,19 +41,19 @@ public class Reimbursement implements Serializable {
 	@Column(name = "reimb_receipt")
 	private byte[] receipt;
 
-	@OneToOne(targetEntity = User.class)
+	@OneToOne(targetEntity = User.class, cascade = CascadeType.ALL)
 	@JoinColumn(name = "reimb_author_id", referencedColumnName = "ers_user_id")
 	private User author = new User();
 
-	@OneToOne(targetEntity = User.class)
+	@OneToOne(targetEntity = User.class, cascade = CascadeType.ALL)
 	@JoinColumn(name = "reimb_resolver_id", referencedColumnName = "ers_user_id")
 	private User resolver = new User();
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "reimb_status_id", referencedColumnName = "status_id")
 	private ReimbursementStatus status;
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "reimb_type_id", referencedColumnName = "type_id")
 	private ReimbursementType type;
 

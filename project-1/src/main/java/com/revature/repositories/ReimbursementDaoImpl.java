@@ -14,18 +14,20 @@ public class ReimbursementDaoImpl implements ReimbursementDao {
 	private static Session session = HibernateUtil.getSession();
 
 	@Override
-	public void insertReimbursement(Reimbursement reimb) {
-
+	public int insertReimbursement(Reimbursement reimb) {
+		System.out.println("inside DAO Layer...inserting reimb...");
+		int temp = 0;
 		Transaction tx = session.beginTransaction();
 
 		try {
-			session.save(reimb);
+			temp = (int) session.save(reimb);
+			System.out.println("Save complete. Your Reimbursement Number is: " + temp);
 		} catch (Exception e) {
 			log.warn("Failed to insert reimb into database. Stack Trace: ", e);
 		}
 
 		tx.commit();
-
+		return temp;
 	}
 
 	@Override
@@ -36,7 +38,9 @@ public class ReimbursementDaoImpl implements ReimbursementDao {
 
 	@Override
 	public Reimbursement selectReimbursementById(int id) {
+		System.out.println("inside of Reimb DAO Layer...selectng by reimbId: " + id);
 		Reimbursement reimb = session.get(Reimbursement.class, id);
+		System.out.println("Reimbursement found: " + reimb);
 		return reimb;
 	}
 

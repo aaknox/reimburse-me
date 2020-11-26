@@ -51,6 +51,20 @@ public class UserDaoImpl implements UserDao {
 		}
 		return user;
 	}
+	
+	@Override
+	public User selectUserByUserId(int userId) {
+		User user = null;
+
+		try {
+			List<User> userList = session.createQuery("from User where userId='" + userId + "'", User.class).list();
+			user = userList.get(0);
+			log.info("My user: " + user);
+		} catch (Exception e) {
+			log.warn("Failed to find user by username in database. Stack Trace: ", e);
+		}
+		return user;
+	}
 
 	@Override
 	public void updateUser(User user) {

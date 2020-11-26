@@ -10,6 +10,7 @@ public interface UserService {
 	
 	public List<User> getAllUsers();
 	public User getUserByUsername(String username);
+	public User getUserByUserId(int userId);
 	
 	public void modifyUser(User u);
 	

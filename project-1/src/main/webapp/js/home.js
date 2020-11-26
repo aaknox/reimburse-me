@@ -1,3 +1,11 @@
+function sleep(milliseconds){
+	const date = Date.now();
+	let currentDate = null;
+	do{
+		currentDate = Date.now();
+	}while(currentDate - date < milliseconds);
+}
+
 function logout() {
 	console.log('logout link clicked')
 	let xhr = new XMLHttpRequest();
@@ -7,6 +15,12 @@ function logout() {
 
 	sessionStorage.removeItem('currentUser');
 	window.location = "http://localhost:8080/project-1/";
+}
+
+function goSubmit(){
+	console.log('submit option selected!');
+	sleep(1000);
+	window.location = "http://localhost:8080/project-1/submit-request.html";
 }
 
 function profile() {

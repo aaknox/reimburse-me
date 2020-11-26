@@ -47,6 +47,19 @@ public class UserServiceImpl implements UserService {
 		}
 		return user;
 	}
+	
+	@Override
+	public User getUserByUserId(int userId) {
+		User user = null;
+		try {
+			user = userDao.selectUserByUserId(userId);
+			
+			log.info("Retrieval successful");
+		} catch (Exception e) {
+			log.warn("Error in getUserByUserId. Stack Trace: ", e);
+		}
+		return user;
+	}
 
 	@Override
 	public User confirmLogin(String username, String password) {
@@ -106,5 +119,7 @@ public class UserServiceImpl implements UserService {
 				e.getUserRole().getRoleName()
 				);
 	}
+
+	
 
 }

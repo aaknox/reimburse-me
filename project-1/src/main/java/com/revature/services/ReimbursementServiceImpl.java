@@ -1,26 +1,36 @@
 package com.revature.services;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 
 import com.revature.models.Reimbursement;
+import com.revature.models.ReimbursementDTO;
+import com.revature.models.ReimbursementStatus;
+import com.revature.models.ReimbursementType;
+import com.revature.models.User;
 import com.revature.repositories.ReimbursementDao;
 import com.revature.repositories.ReimbursementDaoImpl;
+import com.revature.util.ReimbTemplate;
 
 public class ReimbursementServiceImpl implements ReimbursementService {
 	private static Logger log = Logger.getLogger(ReimbursementServiceImpl.class);
 	private static ReimbursementDao reimbDao = new ReimbursementDaoImpl();
-
+	private static UserServiceImpl userServiceImpl = new UserServiceImpl();
+	
 	@Override
-	public void addReimbursement(Reimbursement r) {
+	public int addReimbursement(Reimbursement r) {
 		log.info("Inside ReimbursementServiceImpl - adding reimbursement to database...");
 		try {
-			reimbDao.insertReimbursement(r);
 			log.info("Addition was successful!");
+			return reimbDao.insertReimbursement(r);
 		} catch (Exception e) {
 			log.warn("Addition failed here. Stack Trace: ", e);
 		}
+		return 0;
 	}
 
 	@Override
@@ -38,7 +48,9 @@ public class ReimbursementServiceImpl implements ReimbursementService {
 
 	@Override
 	public Reimbursement getReimbursementById(int id) {
+		log.info("Inside ReimbursementServiceImpl - gathering reimbursement record with reimb id number: " + id);
 		Reimbursement reimb = reimbDao.selectReimbursementById(id);
+		System.out.println("Back in service layer, get by reimb id. Reimbursement found: " + reimb);
 		return reimb;
 	}
 
@@ -71,6 +83,46 @@ public class ReimbursementServiceImpl implements ReimbursementService {
 		} catch (Exception e) {
 			log.warn("Deletion failed here. Stack Trace: ", e);
 		}
+	}
+	
+	public Reimbursement convertToReimb(ReimbTemplate temp) {
+		double rAmount = Double.parseDouble(temp.getAmount());
+		LocalDateTime sDateTime = LocalDateTime.now();
+		LocalDateTime rDateTime = null;
+		int statusId = Integer.parseInt(Arrays.asList(temp.getReimbursementStatus()).get(0));
+		String statusName = Arrays.asList(temp.getReimbursementStatus()).get(1);
+		int typeId = Integer.parseInt(Arrays.asList(temp.getReimbursementType()).get(0));
+		String typeName = Arrays.asList(temp.getReimbursementType()).get(1);
+		User author = userServiceImpl.getUserByUserId(Integer.valueOf(temp.getAuthorId()));
+		User resolver = new User();
+		
+		return new Reimbursement(
+					BigDecimal.valueOf(rAmount),
+					sDateTime, rDateTime,
+					temp.getDescription(),
+					temp.getReceipt().getBytes(),
+					author,
+					resolver,
+					new ReimbursementStatus(statusId, statusName),
+					new ReimbursementType(typeId, typeName)
+				);
+	}
+	
+	public ReimbursementDTO convertToDTO(Reimbursement r) {
+		return new ReimbursementDTO(
+					r.getrId(),
+					r.getAmount().toPlainString(),
+					r.getSubmissionDateTime().toString(),
+					"",
+					r.getDescription(),
+					r.getReceipt().toString(),
+					r.getAuthor().getUserId(),
+					r.getResolver().getUserId(),
+					r.getStatus().getStatusId(),
+					r.getStatus().getStatusName(),
+					r.getType().getTypeId(),
+					r.getType().getTypeName()
+				);
 	}
 
 }

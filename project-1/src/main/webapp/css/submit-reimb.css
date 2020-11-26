@@ -1,0 +1,81 @@
+@charset "ISO-8859-1";
+
+*{
+	box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+    animation: none;
+}
+
+textarea:focus,
+input:focus,
+button:focus {
+    outline: none !important;
+}
+
+html{
+	background-color: rgba(0, 0, 0, 0.4);
+}
+
+h1{
+	margin: 0 20px;
+	letter-spacing: 2px;
+	font-weight: 400;
+}
+
+label, h3{
+	margin: 10px 20px;
+	font-weight: 600;
+	display: block;
+}
+
+#role-input-container{
+	margin: 10px 20px;
+	font-weight: 600;
+	font-size: 1.1rem;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="number"],
+input[type="file"]{
+    font-size: 1.5rem;
+    margin: 20px auto;
+    padding: 5px 15px;
+    border: none;
+    border-radius: 20px;
+    text-align: left;
+}
+
+textarea, 
+input[type="file"]{
+	display: block;
+	text-align: left;
+}
+
+textarea{
+	width: 50%;
+	height: 100px;
+	border-radius: 20px;
+	font-size: 20px;
+	padding: 5px 15px;
+}
+
+button,
+input[type="submit"]
+{
+    font-size: 1.2rem;
+    margin-top: 20px;
+    padding: 5px 15px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: 0.4s ease-in-out;
+}
+
+button:hover,
+input[type="submit"]:hover
+{
+    background-color: tomato;
+    color: white;
+    text-decoration: underline;
+}

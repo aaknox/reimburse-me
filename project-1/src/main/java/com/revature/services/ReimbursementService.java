@@ -5,7 +5,7 @@ import java.util.List;
 import com.revature.models.Reimbursement;
 
 public interface ReimbursementService {
-	public void addReimbursement(Reimbursement r);
+	public int addReimbursement(Reimbursement r);
 	
 	public Reimbursement getReimbursementById(int id);
 	public List<Reimbursement> getAllReimbursements();
