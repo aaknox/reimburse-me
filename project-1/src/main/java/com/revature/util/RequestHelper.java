@@ -116,6 +116,7 @@ public class RequestHelper {
 
 	public static void processSubmitReimb(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		log.info("User choose to submit a reimbursement.");
+		System.out.println("Let's get started...");
 		BufferedReader reader = request.getReader();
 		StringBuilder s = new StringBuilder();
 
@@ -134,18 +135,22 @@ public class RequestHelper {
 			// convert template into POJO
 			Reimbursement r = reimbService.convertToReimb(reimbAttempt);
 			// insert new reimb into database
-			int rId = reimbService.addReimbursement(r);
-			System.out.println("NEW REIMBURSEMENT ID IS: " + rId);
-			Reimbursement temp = reimbService.getReimbursementById(rId);
-			System.out.println(temp);
-			ReimbursementDTO reimbDTO = reimbService.convertToDTO(temp);
-			if (reimbDTO != null) {
+			int id = reimbService.addReimbursement(r);
+			System.out.println("back in request helper. converting data into json...");
+			Reimbursement result = reimbService.getReimbursementById(id);
+			
+			//check that we got a new reimbursement in database
+			if (result != null) {
+				ReimbursementDTO reimbDTO = reimbService.convertToDTO(result);
+				System.out.println("Successful!");
 				PrintWriter pw = response.getWriter();
 				String json = om.writeValueAsString(reimbDTO);
 				pw.println(json);
+				System.out.println("JSON:\n" + json);
 				response.setContentType("application/json");
 				response.setStatus(200); // SUCCESSFUL!
 			} else {
+				System.out.println("Sorry, Azhya....i have failed you :(....");
 				response.setContentType("application/json");
 				response.setStatus(204); // this means that the connection was successful but insert failed!
 			}

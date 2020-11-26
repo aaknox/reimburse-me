@@ -41,19 +41,19 @@ public class Reimbursement implements Serializable {
 	@Column(name = "reimb_receipt")
 	private byte[] receipt;
 
-	@OneToOne(targetEntity = User.class, cascade = CascadeType.ALL)
+	@OneToOne(targetEntity = User.class)
 	@JoinColumn(name = "reimb_author_id", referencedColumnName = "ers_user_id")
 	private User author = new User();
 
-	@OneToOne(targetEntity = User.class, cascade = CascadeType.ALL)
+	@OneToOne(targetEntity = User.class)
 	@JoinColumn(name = "reimb_resolver_id", referencedColumnName = "ers_user_id")
 	private User resolver = new User();
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name = "reimb_status_id", referencedColumnName = "status_id")
 	private ReimbursementStatus status;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name = "reimb_type_id", referencedColumnName = "type_id")
 	private ReimbursementType type;
 

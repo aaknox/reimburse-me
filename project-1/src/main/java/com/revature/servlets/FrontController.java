@@ -35,6 +35,8 @@ public class FrontController extends HttpServlet {
 			RequestHelper.processSubmitReimb(request, response);
 			break;
 		}
+		
+		System.out.println("Leaving front controller...");
 	}
 	
 

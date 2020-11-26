@@ -1,12 +1,21 @@
 package com.revature.repositories;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 import com.revature.models.Reimbursement;
+import com.revature.util.ConnectionUtil;
 import com.revature.util.HibernateUtil;
 
 public class ReimbursementDaoImpl implements ReimbursementDao {
@@ -15,19 +24,40 @@ public class ReimbursementDaoImpl implements ReimbursementDao {
 
 	@Override
 	public int insertReimbursement(Reimbursement reimb) {
-		System.out.println("inside DAO Layer...inserting reimb...");
-		int temp = 0;
-		Transaction tx = session.beginTransaction();
+		System.out.println("inside DAO Layer...inserting reimb...");;
+		int reimbId = 0;
 
-		try {
-			temp = (int) session.save(reimb);
-			System.out.println("Save complete. Your Reimbursement Number is: " + temp);
+		try (Connection conn = ConnectionUtil.getConnection()){
+			String sql = "INSERT INTO ers_reimbursements(reimb_amount, reimb_submitted, reimb_resolved, reimb_description, reimb_receipt, reimb_author_id, reimb_resolver_id, reimb_status_id, reimb_type_id)" + 
+					"VALUES (?, ?, NULL, ?, ?, ?, NULL, ?, ?);";
+			PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			ps.setBigDecimal(1, reimb.getAmount());
+			ps.setTimestamp(2, Timestamp.valueOf(reimb.getSubmissionDateTime()));
+			ps.setString(3, reimb.getDescription());
+			ps.setBytes(4, reimb.getReceipt());
+			ps.setInt(5, reimb.getAuthor().getUserId());
+			ps.setInt(6, reimb.getStatus().getStatusId());
+			ps.setInt(7, reimb.getType().getTypeId());
+			
+			int affectedRows = ps.executeUpdate();
+			if(affectedRows == 0) {
+				throw new SQLException("Creating new reimbursement failed, no rows affected.");
+			}
+			try (ResultSet genKeys = ps.getGeneratedKeys()){
+				if(genKeys.next()) {
+					reimbId = genKeys.getInt("reimb_id");
+					System.out.println("The new reimbursement ID is: " + reimbId);
+				}
+			} catch (Exception e) {
+				throw new SQLException("Creating new reimbursement failed, no ID obtained.");
+			}
+			;
+			System.out.println("Save complete.");
 		} catch (Exception e) {
 			log.warn("Failed to insert reimb into database. Stack Trace: ", e);
 		}
 
-		tx.commit();
-		return temp;
+		return reimbId;
 	}
 
 	@Override

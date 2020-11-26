@@ -41,7 +41,7 @@ public class User implements Serializable{
 	@Column(name = "ers_user_hire_date", nullable = false)
 	private LocalDate hireDate;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne
 	@JoinColumn(name="ers_user_role_id", referencedColumnName = "ers_role_id")
 	private UserRole userRole;
 

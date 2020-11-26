@@ -97,7 +97,7 @@ if (successString === null) {
 	if (requestMessage != null) {
 		code.innerText = 'Success! (Status Code: ' + requestMessage.code + ')';
 		message.innerText = requestMessage.details;
-		cause.innerText = requestMessage.reimbRequest;
+		cause.innerHTML = "<strong>Please note your new reimbursement request info below: </strong>" + requestMessage.reimbRequest;
 	}
 }
 

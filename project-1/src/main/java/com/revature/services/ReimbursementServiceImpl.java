@@ -24,9 +24,12 @@ public class ReimbursementServiceImpl implements ReimbursementService {
 	@Override
 	public int addReimbursement(Reimbursement r) {
 		log.info("Inside ReimbursementServiceImpl - adding reimbursement to database...");
+		int id = 0;
 		try {
-			log.info("Addition was successful!");
-			return reimbDao.insertReimbursement(r);
+			log.info("Starting to process request of submission...");
+			id = reimbDao.insertReimbursement(r);
+			System.out.println("reimbursement added. leaving service layer...");
+			return id;
 		} catch (Exception e) {
 			log.warn("Addition failed here. Stack Trace: ", e);
 		}
@@ -117,7 +120,7 @@ public class ReimbursementServiceImpl implements ReimbursementService {
 					r.getDescription(),
 					r.getReceipt().toString(),
 					r.getAuthor().getUserId(),
-					r.getResolver().getUserId(),
+					0,
 					r.getStatus().getStatusId(),
 					r.getStatus().getStatusName(),
 					r.getType().getTypeId(),
