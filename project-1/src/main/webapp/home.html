@@ -9,28 +9,42 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <script src="https://kit.fontawesome.com/b825c1b0e8.js"></script>
-    <link rel="shortcut icon" href="/img/money-icon-2.png" type="image/x-icon" />
+    <link rel="shortcut icon" href="img/money-icon-2.png" type="image/x-icon" />
 </head>
 
 <body>
     <header>
         <h1>Select an option from below.</h1>
     </header>
+    <div id="helpModal" class="modal">
+	    <div class="modal-contents">
+	    	<div class="close">&times;</div>
+	    	<h2>How to Use ReimburseMe - User Guide</h2>
+	    	<div class="myHelp">
+	    	<strong>Submit A New Reimbursement Request</strong>: Select this option to send a new reimbursement request to HR. Receipts are required (10 max).<br>
+	    	<strong>View Past Requests</strong>: Select this option to view your past submitted requests (of APPROVED/DENIED status).<br>
+	    	<strong>View Pending Requests</strong>: Select this option to view your active requests (of PENDING status).<br>
+	    	<strong>View Profile</strong>: Select this option to view and update your personal information.<br><br>
+	    	<strong>Note: For the "Adminstration" option how-tos, please see the help box in the adminstration home page.</strong><br>
+	    	If you want to cancel or update any active request, you can contact our finance team at <a href="#">contact.reimburseme@gmail.com</a>.
+	    	</div>
+	    </div>
+    </div>
     <section id="option-container">
         <div id="option">
             <i class="fas fa-file-invoice-dollar"></i> <a onclick="goSubmit()">Submit a
 				Reimbursement Request</a>
         </div>
         <div id="option">
-            <i class="fas fa-clipboard-list"></i> <a href="">View Past
+            <i class="fas fa-clipboard-list"></i> <a onclick="goPastRequests()">View Past
 				Requests</a>
         </div>
         <div id="option">
-            <i class="fas fa-search-dollar"></i> <a href="">View Pending
+            <i class="fas fa-search-dollar"></i> <a onclick="goPendingRequests()">View Pending
 				Requests</a>
         </div>
         <div id="option" class="admin disabled">
-            <i class="fas fa-user-tie"></i> <a href="">Adminstration</a>
+            <i class="fas fa-user-tie"></i> <a onclick="goAdmin()">Adminstration</a>
         </div>
     </section>
     <br>
@@ -39,12 +53,13 @@
             <ul>
                 <li><span id="welcome-message">Welcome, User!</span></li>
                 <li><a onclick="profile()">View Profile</a></li>
-                <li><a href="">Need Help?</a></li>
+                <li><a id="helpBtn">Need Help?</a></li>
                 <li><a onclick="logout()">Log Out</a></li>
             </ul>
         </nav>
     </footer>
     <script src="js/home.js"></script>
+    <script src="js/help.js"></script>
 </body>
 
 </html>

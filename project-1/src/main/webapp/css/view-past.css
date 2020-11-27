@@ -1,0 +1,34 @@
+@charset "ISO-8859-1";
+
+*{
+	box-sizing: border-box;
+}
+html,body{
+	background-color: gray;
+}
+
+#header{
+	margin: 20px;
+}
+
+#author-id{
+	float: left;
+	width: 50%;
+}
+
+#header .fas{
+	float: right;
+	width: 50%;
+}
+
+#author-id:after,
+#header .fas:after{
+	content: "";
+	clear: both;
+	display: table;
+}
+
+button{
+	margin-top: 50px;
+	display: block;
+}

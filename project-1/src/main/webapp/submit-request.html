@@ -16,15 +16,21 @@
 		onSubmit="sendReimbRequest(event.preventDefault())">
 		<label for="amount">
 			Amount:
-			<input id="amount"type="number" max="1000" step="0.01" name="amount" class="field">
+			<input id="amount"type="number" max="1000" step="0.01" name="amount" class="field" 
+			required oninvalid="this.setCustomValidity('Please enter an amount!')" 
+			oninput="this.setCustomValidity('')">
 		</label>
 		<label for="description">
 			Description:
-			<textarea id="description" rows="3" cols="10" name="description" class="field"></textarea>
+			<textarea id="description" rows="3" cols="10" name="description" class="field" required 
+			oninvalid="this.setCustomValidity('Please enter a reason for this reimbursement!')"
+			oninput="this.setCustomValidity('')"></textarea>
 		</label>
 		<label for="reciept">
 			Upload Receipt(s):
-			<input type="file" name="reciept" id="reciept-file" multiple size="10" onchange="showReciept()">
+			<input type="file" name="reciept" id="reciept-file" multiple size="10" onchange="showReciept()" required 
+			oninvalid="this.setCustomValidity('Please upload needed receipt(s) for this reimbursement!')"
+			oninput="this.setCustomValidity('')">
 		</label>
 		<p id="file-display"></p>
 		<label for="author-id">

@@ -22,6 +22,21 @@ function goSubmit(){
 	sleep(1000);
 	window.location = "http://localhost:8080/project-1/submit-request.html";
 }
+function goPastRequests(){
+	console.log('view past requests option selected!');
+	sleep(1000);
+	window.location = "http://localhost:8080/project-1/view-past-requests.html";
+}
+function goPendingRequests(){
+	console.log('view pending requests option selected!');
+	sleep(1000);
+	window.location = "http://localhost:8080/project-1/view-pending-requests.html";
+}
+function goAdmin(){
+	console.log('admin option selected!');
+	sleep(1000);
+	window.location = "http://localhost:8080/project-1/adminstration.html";
+}
 
 function profile() {
 	console.log('profile link clicked!');
