@@ -25,8 +25,31 @@ function goSubmit(){
 function goPastRequests(){
 	console.log('view past requests option selected!');
 	sleep(1000);
+	//begin AJAX workflow here
+	let xhr = new XMLHttpRequest();
+	xhr.onreadystatechange = function() {
+		if (this.readyState <= 3) {
+			console.log('loading...')
+		}
+		if (this.readyState === 4 && this.status === 200) {
+			console.log("Found Table Data!!")
+			sessionStorage.setItem('tableData', this.responseText)
+			window.location = "http://localhost:8080/project-1/view-past-requests.html"
+			console.log(sessionStorage.getItem('currentUser'))
+		}
+		if (this.readyState === 4 && this.status > 200) {
+			console.log("Failed to load table data")
+			alert("No reimbursements can be found for this user.");
+		}
+		console.log("Processing past requests view...")
+
+	}
+	xhr.open("GET", "reimbursements/view-past");
+	xhr.send();
+	
 	window.location = "http://localhost:8080/project-1/view-past-requests.html";
 }
+
 function goPendingRequests(){
 	console.log('view pending requests option selected!');
 	sleep(1000);
