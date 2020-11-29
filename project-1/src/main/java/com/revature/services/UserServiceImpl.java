@@ -1,5 +1,7 @@
 package com.revature.services;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,6 +9,7 @@ import org.apache.log4j.Logger;
 
 import com.revature.models.User;
 import com.revature.models.UserDTO;
+import com.revature.models.UserRole;
 import com.revature.repositories.UserDaoImpl;
 
 public class UserServiceImpl implements UserService {
@@ -117,6 +120,19 @@ public class UserServiceImpl implements UserService {
 				e.getHireDate().toString(), 
 				e.getUserRole().getRoleId(), 
 				e.getUserRole().getRoleName()
+				);
+	}
+	
+	public User convertToUser(UserDTO dto) {
+		return new User(
+				dto.getUserId(),
+				dto.getUsername(),
+				dto.getPassword(),
+				dto.getFirstName(),
+				dto.getLastName(), 
+				dto.getEmail(),
+				LocalDate.parse(dto.getHireDate()), 
+				new UserRole(dto.getUserRoleId(), dto.getUserRoleName())
 				);
 	}
 

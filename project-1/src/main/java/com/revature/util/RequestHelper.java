@@ -3,6 +3,8 @@ package com.revature.util;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -10,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.models.Reimbursement;
 import com.revature.models.ReimbursementDTO;
@@ -162,9 +165,49 @@ public class RequestHelper {
 	public static void processViewPastReimb(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		log.info("User choose to view their past reimbursements.");
 		System.out.println("Let's get started...");
-		response.setContentType("application/json");
 		
-		List<Reimbursement> list = reimbService.getReimbursementsByUserId();
+		//This is a GET request, meaning no request body...
+		String paramStr = request.getQueryString();
+		
+		System.out.println("Param string: " + paramStr);
+		String idStr = paramStr.substring(3);
+		int authorId = Integer.parseInt(idStr);
+		System.out.println("TEST- My Author ID is: " + authorId);
+		List<Reimbursement> list = reimbService.getReimbursementsByAuthorId_NotPending(authorId);
+		List<ReimbursementDTO> listDTO = new ArrayList<>();
+		
+		//check that we got a new reimbursement in database
+		if (list != null) {
+			for (Reimbursement r : list) {
+				listDTO.add(reimbService.convertToDTOFull(r));
+			}
+
+			String json = om.writeValueAsString(listDTO);
+			PrintWriter pw = response.getWriter();
+			pw.println(json);
+			System.out.println("JSON:\n" + json);
+			response.setContentType("application/json");
+			response.setStatus(200); // SUCCESSFUL!
+		}else {
+			System.out.println("Sorry, Azhya....i have failed you :(....");
+			response.setContentType("application/json");
+			response.setStatus(204); // this means that the connection was successful but select statement failed!
+		}
+		log.info("Leaving request helper at processViewPastReimb()...");
+	}
+
+	public static void processViewPendingReimb(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		log.info("User choose to view their pending reimbursements.");
+		System.out.println("Let's get started...");
+		
+		//This is a GET request, meaning no request body...
+		String paramStr = request.getQueryString();
+		
+		System.out.println("Param string: " + paramStr);
+		String idStr = paramStr.substring(3);
+		int authorId = Integer.parseInt(idStr);
+		System.out.println("TEST- My Author ID is: " + authorId);
+		List<Reimbursement> list = reimbService.getReimbursementsByAuthorId_Pending(authorId);
 		List<ReimbursementDTO> listDTO = new ArrayList<>();
 		
 		//check that we got a new reimbursement in database
@@ -174,17 +217,17 @@ public class RequestHelper {
 			}
 
 			String json = om.writeValueAsString(listDTO);
-
-			PrintWriter pw = res.getWriter();
+			PrintWriter pw = response.getWriter();
 			pw.println(json);
 			System.out.println("JSON:\n" + json);
+			response.setContentType("application/json");
 			response.setStatus(200); // SUCCESSFUL!
 		}else {
 			System.out.println("Sorry, Azhya....i have failed you :(....");
 			response.setContentType("application/json");
 			response.setStatus(204); // this means that the connection was successful but select statement failed!
 		}
-		log.info("Leaving request helper at processViewPastReimb()...");
+		log.info("Leaving request helper at processViewPendingReimb()...");
 	}
 
 }

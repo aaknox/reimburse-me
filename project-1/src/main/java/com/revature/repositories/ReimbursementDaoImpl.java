@@ -12,7 +12,6 @@ import org.apache.log4j.Logger;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.query.Query;
 
 import com.revature.models.Reimbursement;
 import com.revature.util.ConnectionUtil;
@@ -80,7 +79,29 @@ public class ReimbursementDaoImpl implements ReimbursementDao {
 				"Select * from ers_reimbursements where reimb_status_id ='" + statusId + "'", Reimbursement.class).list();
 		return reimbList;
 	}
-
+	
+	@Override
+	public List<Reimbursement> selectReimbursementsByAuthorId(int authorId) {
+		List<Reimbursement> reimbList = session.createNativeQuery(
+				"Select * from ers_reimbursements where reimb_author_id ='" + authorId + "'", Reimbursement.class).list();
+		return reimbList;
+	}
+	
+	//AND reimb_status_id != 2 <-- not pending
+	@Override
+	public List<Reimbursement> selectReimbursementsByAuthorId_NotPending(int authorId) {
+		List<Reimbursement> reimbList = session.createNativeQuery(
+				"Select * from ers_reimbursements where reimb_author_id ='" + authorId + "' AND reimb_status_id != 2", Reimbursement.class).list();
+		return reimbList;
+	}
+	
+	@Override
+	public List<Reimbursement> selectReimbursementsByAuthorId_Pending(int authorId) {
+		List<Reimbursement> reimbList = session.createNativeQuery(
+				"Select * from ers_reimbursements where reimb_author_id ='" + authorId + "' AND reimb_status_id = 2", Reimbursement.class).list();
+		return reimbList;
+	}
+	
 	@Override
 	public void updateReimbursement(Reimbursement reimb) {
 		Transaction tx = session.beginTransaction();

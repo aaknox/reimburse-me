@@ -49,6 +49,10 @@ public class FrontController extends HttpServlet {
 			System.out.println("viewing past reimbursements ...");
 			RequestHelper.processViewPastReimb(request, response);
 			break;
+		case "reimbursements/view-pending":
+			System.out.println("viewing pending reimbursements ...");
+			RequestHelper.processViewPendingReimb(request, response);
+			break;
 		}
 	}
 

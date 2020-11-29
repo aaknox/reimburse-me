@@ -65,6 +65,35 @@ public class ReimbursementServiceImpl implements ReimbursementService {
 		log.info("Got the reimbursement list marked with status id: " + statusId);
 		return list;
 	}
+	
+	@Override
+	public List<Reimbursement> getReimbursementsByAuthorId(int authorId) {
+		log.info(
+				"Inside ReimbursementServiceImpl - gathering reimbursement records with author id number: " + authorId);
+		List<Reimbursement> list = reimbDao.selectReimbursementsByAuthorId(authorId);
+		log.info("Got the reimbursement list marked with author id: " + authorId);
+		return list;
+	}
+	
+	@Override
+	public List<Reimbursement> getReimbursementsByAuthorId_NotPending(int authorId) {
+		log.info(
+				"Inside ReimbursementServiceImpl - gathering reimbursement records with author id number: " + authorId);
+		log.info("Excluding any PENDING reimbursements...");
+		List<Reimbursement> list = reimbDao.selectReimbursementsByAuthorId_NotPending(authorId);
+		log.info("Got the reimbursement list marked with author id: " + authorId);
+		return list;
+	}
+	
+	@Override
+	public List<Reimbursement> getReimbursementsByAuthorId_Pending(int authorId) {
+		log.info(
+				"Inside ReimbursementServiceImpl - gathering reimbursement records with author id number: " + authorId);
+		log.info("PENDING reimbursements ONLY...");
+		List<Reimbursement> list = reimbDao.selectReimbursementsByAuthorId_Pending(authorId);
+		log.info("Got the reimbursement list marked with author id: " + authorId);
+		return list;
+	}
 
 	@Override
 	public void modifyReimbursement(Reimbursement r) {
@@ -127,5 +156,24 @@ public class ReimbursementServiceImpl implements ReimbursementService {
 					r.getType().getTypeName()
 				);
 	}
+
+	public ReimbursementDTO convertToDTOFull(Reimbursement r) {
+		return new ReimbursementDTO(
+					r.getrId(),
+					r.getAmount().toPlainString(),
+					r.getSubmissionDateTime().toString(),
+					r.getResolutionDateTime().toString(),
+					r.getDescription(),
+					r.getReceipt().toString(),
+					r.getAuthor().getUserId(),
+					r.getResolver().getUserId(),
+					r.getStatus().getStatusId(),
+					r.getStatus().getStatusName(),
+					r.getType().getTypeId(),
+					r.getType().getTypeName()
+				);
+	}
+
+	
 
 }

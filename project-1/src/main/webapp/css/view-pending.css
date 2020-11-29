@@ -1,0 +1,145 @@
+@charset "ISO-8859-1";
+
+*{
+	box-sizing: border-box;
+}
+
+input:focus, button:focus,
+textarea:focus{
+	outline: none !important;
+}
+
+html,body{
+	height: 100%;
+}
+
+body {
+	color: #fff;
+	margin: 0;
+	background: linear-gradient(45deg, #a0499d, #cc0e0e);
+	background-repeat: no-repeat;
+	font-family: "Roboto", sans-serif;
+	font-weight: 100;
+}
+
+span{
+	display: inline;
+	font-weight: 500;
+	font-size: 1.2rem;
+}
+
+.title{
+	line-height: 2;
+	margin: 20px;
+	font-weight: 500;
+	font-size: 1.5rem;
+	letter-spacing: 2px;
+}
+.container {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+
+#header{
+	margin: 20px;
+}
+
+#author-id{
+	float: left;
+	width: 50%;
+}
+
+#author-id:after{
+	content: "";
+	clear: both;
+	display: table;
+}
+
+table {
+	width: 800px;
+	max-width: 1300px;
+	border-collapse: collapse;
+	overflow: hidden;
+	box-shadow: 0 0 20px rgba(0,0,0,0.1);
+}
+
+th,
+td {
+	padding: 10px;
+	background-color: rgba(255,255,255,0.2);
+	color: #fff;
+}
+
+th {
+	text-align: center;
+}
+
+thead th {
+	background-color: #2a0b29;
+}
+
+tbody tr:hover {
+	background-color: rgba(255,255,255,0.3);
+}
+tbody td {
+	position: relative;
+	text-align: center;
+}
+tbody td:hover:before {
+	content: "";
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: -9999px;
+	bottom: -9999px;
+	background-color: rgba(255,255,255,0.2);
+	z-index: -1;
+			
+}
+
+button{
+    margin: 10px 20px;
+    padding: 10px 30px;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 20px;
+    overflow: hidden;
+    float: right;
+    transition: 0.4s ease-in-out;
+}
+button:hover{
+	background-color: #2a0b29;
+	color: #fff;
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+button:after{
+	content: "";
+	clear: both;
+	display: table;
+}
+
+/*MENU CSS CODE*/
+.menu{
+	display: none; /*disabled for now*/
+	position: absolute;
+    top: 50px;
+    right: 20px;
+    padding: 20px 20px;
+    width: 50px;
+    height: 50px;
+    font-size: 13px;
+    font-family: 'Roboto', sans serif;
+    font-weight: 700;
+    white-space: nowrap;
+    color: #464448;
+    overflow: hidden;
+    background: #efefef;
+    border-radius: 50%;
+    box-shadow: 0 3px 10px -2px rgba(255, 255, 255, 0.25);
+    transition: 0.2s;
+}

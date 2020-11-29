@@ -25,6 +25,7 @@ function goSubmit(){
 function goPastRequests(){
 	console.log('view past requests option selected!');
 	sleep(1000);
+	
 	//begin AJAX workflow here
 	let xhr = new XMLHttpRequest();
 	xhr.onreadystatechange = function() {
@@ -38,22 +39,65 @@ function goPastRequests(){
 			console.log(sessionStorage.getItem('currentUser'))
 		}
 		if (this.readyState === 4 && this.status > 200) {
-			console.log("Failed to load table data")
-			alert("No reimbursements can be found for this user.");
+			console.log("Failed to load table data");
+			console.log("Failed. Status Code: " + this.status);
+			var reason = {
+				code : this.status,
+				issue : 'Failed to load table data for this user.'
+			};
+			console.log(reason);
+			sessionStorage.setItem('failMessage', JSON.stringify(reason));
+			console.log(sessionStorage.getItem('failMessage'));
+			window.location = "http://localhost:8080/project-1/error.html";
 		}
 		console.log("Processing past requests view...")
 
 	}
-	xhr.open("GET", "reimbursements/view-past");
+	let user = JSON.parse(sessionStorage.getItem('currentUser'));
+	console.log(user);
+	let id = user.userId;
+	console.log("ID: " + id);
+	xhr.open("GET", `reimbursements/view-past?id=${id}`);
 	xhr.send();
-	
-	window.location = "http://localhost:8080/project-1/view-past-requests.html";
 }
 
 function goPendingRequests(){
 	console.log('view pending requests option selected!');
 	sleep(1000);
-	window.location = "http://localhost:8080/project-1/view-pending-requests.html";
+	
+	//begin AJAX workflow here
+	let xhr = new XMLHttpRequest();
+	xhr.onreadystatechange = function() {
+		if (this.readyState <= 3) {
+			console.log('loading...')
+		}
+		if (this.readyState === 4 && this.status === 200) {
+			console.log("Found Table Data!!")
+			sessionStorage.setItem('tableData', this.responseText)
+			window.location = "http://localhost:8080/project-1/view-pending-requests.html"
+			console.log(sessionStorage.getItem('currentUser'))
+		}
+		if (this.readyState === 4 && this.status > 200) {
+			console.log("Failed to load table data");
+			console.log("Failed. Status Code: " + this.status);
+			var reason = {
+				code : this.status,
+				issue : 'Failed to load table data for this user.'
+			};
+			console.log(reason);
+			sessionStorage.setItem('failMessage', JSON.stringify(reason));
+			console.log(sessionStorage.getItem('failMessage'));
+			window.location = "http://localhost:8080/project-1/error.html";
+		}
+		console.log("Processing past requests view...")
+
+	}
+	let user = JSON.parse(sessionStorage.getItem('currentUser'));
+	console.log(user);
+	let id = user.userId;
+	console.log("ID: " + id);
+	xhr.open("GET", `reimbursements/view-pending?id=${id}`);
+	xhr.send();
 }
 function goAdmin(){
 	console.log('admin option selected!');

@@ -158,6 +158,12 @@ SELECT * FROM ers_reimbursements_types ORDER BY type_id;
 --DELETE FROM ers_users WHERE ers_user_id = 7;
 --UPDATE ers_users SET ers_user_password = 'password' WHERE ers_username = 'aaknox';
 --DELETE FROM ers_reimbursements WHERE reimb_id > 300;
+--SELECT * FROM ers_reimbursements WHERE reimb_author_id = 3 AND reimb_status_id != 2;
+--UPDATE ers_reimbursements SET reimb_resolver_id = 3 WHERE reimb_id = 500;
+--UPDATE ers_reimbursements SET reimb_resolved = current_timestamp WHERE reimb_id = 500;
+--UPDATE ers_reimbursements SET reimb_resolver_id = 3 WHERE reimb_id = 1500;
+--UPDATE ers_reimbursements SET reimb_resolved = current_timestamp WHERE reimb_id = 1500;
+--UPDATE ers_reimbursements SET reimb_status_id = 3 WHERE reimb_id = 1500;
 /************************************************************
  * 							END OF SCRIPT                   *
  ************************************************************/

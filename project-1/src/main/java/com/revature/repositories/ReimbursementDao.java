@@ -16,6 +16,11 @@ public interface ReimbursementDao {
 		
 		public List<Reimbursement> selectReimbursementsByStatusId(int sId);
 		
+		public List<Reimbursement> selectReimbursementsByAuthorId(int authorId);
+		
+		public List<Reimbursement> selectReimbursementsByAuthorId_NotPending(int authorId);
+		
+		public List<Reimbursement> selectReimbursementsByAuthorId_Pending(int authorId);
 		
 		// update
 		public void updateReimbursement(Reimbursement reimb);
