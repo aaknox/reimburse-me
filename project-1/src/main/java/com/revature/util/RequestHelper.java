@@ -162,45 +162,29 @@ public class RequestHelper {
 	public static void processViewPastReimb(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		log.info("User choose to view their past reimbursements.");
 		System.out.println("Let's get started...");
-		BufferedReader reader = request.getReader();
-		StringBuilder s = new StringBuilder();
-
-		// we are just transferring our Reader data to our StringBuilder, line by line
-		String line = reader.readLine();
-		while (line != null) {
-			s.append(line);
-			line = reader.readLine();
-		}
-
-		String body = s.toString();
-		System.out.println(body);
-		// use body to make a reimbTemplate
-		//ReimbTemplate reimbAttempt = om.readValue(body, ReimbTemplate.class);
-
-			// convert template into POJO
-			Reimbursement r = reimbService.convertToReimb(reimbAttempt);
-			// insert new reimb into database
-			int id = reimbService.addReimbursement(r);
-			System.out.println("back in request helper. converting data into json...");
-			Reimbursement result = reimbService.getReimbursementById(id);
-			
-			//check that we got a new reimbursement in database
-			if (result != null) {
-				ReimbursementDTO reimbDTO = reimbService.convertToDTO(result);
-				System.out.println("Successful!");
-				PrintWriter pw = response.getWriter();
-				String json = om.writeValueAsString(reimbDTO);
-				pw.println(json);
-				System.out.println("JSON:\n" + json);
-				response.setContentType("application/json");
-				response.setStatus(200); // SUCCESSFUL!
-			} else {
-				System.out.println("Sorry, Azhya....i have failed you :(....");
-				response.setContentType("application/json");
-				response.setStatus(204); // this means that the connection was successful but insert failed!
+		response.setContentType("application/json");
+		
+		List<Reimbursement> list = reimbService.getReimbursementsByUserId();
+		List<ReimbursementDTO> listDTO = new ArrayList<>();
+		
+		//check that we got a new reimbursement in database
+		if (list != null) {
+			for (Reimbursement r : list) {
+				listDTO.add(reimbService.convertToDTO(r));
 			}
 
-		log.info("Leaving request helper at processSubmitReimb()...");
+			String json = om.writeValueAsString(listDTO);
+
+			PrintWriter pw = res.getWriter();
+			pw.println(json);
+			System.out.println("JSON:\n" + json);
+			response.setStatus(200); // SUCCESSFUL!
+		}else {
+			System.out.println("Sorry, Azhya....i have failed you :(....");
+			response.setContentType("application/json");
+			response.setStatus(204); // this means that the connection was successful but select statement failed!
+		}
+		log.info("Leaving request helper at processViewPastReimb()...");
 	}
 
 }
