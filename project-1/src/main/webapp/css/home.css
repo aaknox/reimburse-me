@@ -20,6 +20,11 @@ header h1 {
     letter-spacing: 2px;
 }
 
+header p {
+    font-size: 1.5rem;
+    margin: 20px;
+}
+
 #option-container {
     display: block;
     float: left;
