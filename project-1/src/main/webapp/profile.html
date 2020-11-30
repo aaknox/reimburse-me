@@ -13,46 +13,42 @@
 <body>
 	<h1>My Profile</h1>
 	<div id="profile-container">
-		<form id="profile-form">
+		<form id="profile-form" onSubmit="sendProfileUpdate(event.preventDefault())">
 			<h3>
 				ID: <span id="user-id" class="field"></span>
 			</h3>
 			<label for="username">
 				Username:<br>
-				<input type="text" id="username" class="field" disabled></input>
-				<button id="update-btn">Update</button>
+				<input type="text" id="username" class="field"></input>
 			</label>
 			<label for="password">
 				Password:<br>
-				<input type="password" id="password" class="field" disabled></input>
-				<button id="update-btn">Update</button>
+				<input type="password" id="password" class="field"></input>
 			</label>
 			<label for="firstname">
 				First Name: <br>
-				<input type="text" id="firstname" class="field" disabled></input>
-				<button id="update-btn">Update</button>
+				<input type="text" id="firstname" class="field"></input>
 			</label>
 			<label for="lastname">
 				Last Name: <br>
-				<input type="text" id="lastname" class="field" disabled></input>
-				<button id="update-btn">Update</button>
+				<input type="text" id="lastname" class="field"></input>
 			</label>
 			<label for="email">
 				Email: <br>
-				<input type="text" id="email" class="field" disabled></input>
-				<button id="update-btn">Update</button>
+				<input type="text" id="email" class="field"></input>
 			</label>
 			<h3>
 				Hire Date: <span id="user-hire-date" class="field"></span>
 			</h3>
 			<span id="role-input-container">
-				Role: <span id="user-role-name" class="field"></span> - <span id="user-role-id" class="field"></span>
+				Role: <span id="user-role-name" class="field"></span> (<span id="user-role-id" class="field"></span>)
 			</span><br>
-			<input type="submit" disabled value="Save Changes" disabled />
+			<input type="submit" value="Save Changes">
 		</form>
 		
 		<button onclick="goBack()">Return to Home Page</button>
 	</div>
+	<script src="js/update.js"></script>
 	<script src="js/profile.js"></script>
 </body>
 </html>

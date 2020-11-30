@@ -6,8 +6,6 @@ function goBack(){
 let fields = document.getElementsByClassName('field');
 let userString = sessionStorage.getItem('currentUser');
 
-console.log(fields);
-
 if (userString === null) {
 	window.location = "http://localhost:8080/project-1/home.html";
 } else {
@@ -22,7 +20,9 @@ if (userString === null) {
 		fields[4].value = currentUser.lastName;
 		fields[5].value = currentUser.email;
 		fields[6].innerHTML = currentUser.hireDate;
-		fields[7].innerText = currentUser.userRoleId;
-		fields[8].innerText = currentUser.userRoleName;
+		fields[7].innerText = currentUser.userRoleName;
+		fields[8].innerText = currentUser.userRoleId;
 	}
+	
+	
 }

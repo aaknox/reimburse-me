@@ -51,10 +51,15 @@ function sendLogin()
         }
         if(this.readyState ===4 && this.status ===204)
         {
-            console.log("Failed")
-            //alert("Failed to log in! Username or password is incorrect")
-            let childDiv= document.getElementById("warningText")
-            childDiv.textContent ="Failed to log in! Username or Password is incorrect"
+            console.log("Failed. Status Code: " + this.status)
+			var reason = {
+				code : this.status,
+				issue : 'Failed to log in. Incorrect Username or Password.'
+			};
+			console.log(reason);
+			sessionStorage.setItem('failMessage', JSON.stringify(reason));
+			console.log(sessionStorage.getItem('failMessage'));
+			window.location = "http://localhost:8080/project-1/badlogin.html"
         }
         console.log("Processing")
         

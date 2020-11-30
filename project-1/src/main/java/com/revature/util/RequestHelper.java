@@ -12,7 +12,6 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.models.Reimbursement;
 import com.revature.models.ReimbursementDTO;
@@ -228,6 +227,50 @@ public class RequestHelper {
 			response.setStatus(204); // this means that the connection was successful but select statement failed!
 		}
 		log.info("Leaving request helper at processViewPendingReimb()...");
+	}
+
+	public static void processUpdateProfile(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		log.info("User choose to update their profile information.");
+		System.out.println("Let's get started...");
+		BufferedReader reader = request.getReader();
+		StringBuilder s = new StringBuilder();
+
+		// we are just transferring our Reader data to our StringBuilder, line by line
+		String line = reader.readLine();
+		while (line != null) {
+			s.append(line);
+			line = reader.readLine();
+		}
+
+		String body = s.toString();
+		System.out.println(body);
+		// use body to make a reimbTemplate
+		UserDTO updateAttempt = om.readValue(body, UserDTO.class);
+
+		// convert template into POJO
+		User u = userService.convertToUser(updateAttempt);
+		// update user info in database
+		userService.modifyUser(u);
+		System.out.println("back in request helper. converting data into json...");
+		User result = userService.getUserByUserId(u.getUserId());
+		//check that we got a new reimbursement in database
+		if (result != null) {
+			UserDTO uDTO = userService.convertToDTO(result);
+			System.out.println("Successful!");
+			PrintWriter pw = response.getWriter();
+			String json = om.writeValueAsString(uDTO);
+			pw.println(json);
+			System.out.println("JSON:\n" + json);
+			response.setContentType("application/json");
+			response.setStatus(200); // SUCCESSFUL!
+		} else {
+			System.out.println("Sorry, Azhya....i have failed you :(....");
+			response.setContentType("application/json");
+			response.setStatus(204); // this means that the connection was successful but update failed!
+		}
+
+		log.info("Leaving request helper at processUpdateProfile()...");
+		
 	}
 
 }

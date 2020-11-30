@@ -23,6 +23,7 @@
     <url-pattern>/logout</url-pattern>
     <url-pattern>/user</url-pattern>
     <url-pattern>/user/delete</url-pattern>
+    <url-pattern>/user/update</url-pattern>
     <url-pattern>/users/view</url-pattern>
     <url-pattern>/reimbursement/submit</url-pattern>
     <url-pattern>/reimbursement/delete</url-pattern>

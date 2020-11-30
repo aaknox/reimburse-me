@@ -71,6 +71,7 @@ public class UserDaoImpl implements UserDao {
 
 		session.beginTransaction();
 		try {
+			session.merge(user);
 			session.update(user);
 		} catch (Exception e) {
 			log.warn("Failed to update user in database. Stack Trace: ", e);
