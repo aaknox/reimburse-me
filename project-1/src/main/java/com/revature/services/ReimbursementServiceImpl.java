@@ -141,6 +141,7 @@ public class ReimbursementServiceImpl implements ReimbursementService {
 	}
 	
 	public ReimbursementDTO convertToDTO(Reimbursement r) {
+		System.out.println(r);
 		return new ReimbursementDTO(
 					r.getrId(),
 					r.getAmount().toPlainString(),
@@ -157,23 +158,22 @@ public class ReimbursementServiceImpl implements ReimbursementService {
 				);
 	}
 
-	public ReimbursementDTO convertToDTOFull(Reimbursement r) {
+	public ReimbursementDTO convertToDTOFull(Reimbursement r){
+		//check for any empty resolverIds and resolutionDates
+		System.out.println(r);
 		return new ReimbursementDTO(
-					r.getrId(),
-					r.getAmount().toPlainString(),
-					r.getSubmissionDateTime().toString(),
-					r.getResolutionDateTime().toString(),
-					r.getDescription(),
-					r.getReceipt().toString(),
-					r.getAuthor().getUserId(),
-					r.getResolver().getUserId(),
-					r.getStatus().getStatusId(),
-					r.getStatus().getStatusName(),
-					r.getType().getTypeId(),
-					r.getType().getTypeName()
-				);
+				r.getrId(),
+				r.getAmount().toPlainString(),
+				r.getSubmissionDateTime().toString(),
+				r.getResolutionDateTime().toString(),
+				r.getDescription(),
+				r.getReceipt().toString(),
+				r.getAuthor().getUserId(),
+				r.getResolver().getUserId(),
+				r.getStatus().getStatusId(),
+				r.getStatus().getStatusName(),
+				r.getType().getTypeId(),
+				r.getType().getTypeName()
+		);
 	}
-
-	
-
 }

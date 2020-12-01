@@ -13,6 +13,8 @@ function sendLogin()
 	console.log(loader);
 	const displayer = document.querySelector('#displayer');
 	console.log(displayer);
+	const link = document.querySelector('#link');
+	console.log(link);
     let uName = document.getElementById("username").value;
     let pWord = document.getElementById("password").value;
     console.log("Username " + uName)
@@ -28,6 +30,7 @@ function sendLogin()
     	if(this.readyState <= 3){
     		console.log('loading');
     		//remove hide class from elements
+    		link.classList.add("hide");
     		loader.classList.remove("hide");
     		displayer.classList.remove("hide");
     		//add show and loading classes to elements

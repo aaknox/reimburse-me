@@ -22,12 +22,13 @@
     <url-pattern>/login</url-pattern>
     <url-pattern>/logout</url-pattern>
     <url-pattern>/user</url-pattern>
+    <url-pattern>/user/add</url-pattern>
     <url-pattern>/user/delete</url-pattern>
     <url-pattern>/user/update</url-pattern>
-    <url-pattern>/users/view</url-pattern>
+    <url-pattern>/users/view-employees</url-pattern>
+    <url-pattern>/users/view-all</url-pattern>
     <url-pattern>/reimbursement/submit</url-pattern>
-    <url-pattern>/reimbursement/delete</url-pattern>
-    <url-pattern>/reimbursements/view-authored</url-pattern>
+    <url-pattern>/reimbursements/view-all</url-pattern>
     <url-pattern>/reimbursements/view-past</url-pattern>
     <url-pattern>/reimbursements/view-pending</url-pattern>
     <url-pattern>/authorize</url-pattern>

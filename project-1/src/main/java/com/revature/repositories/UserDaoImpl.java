@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 
+import com.revature.models.Reimbursement;
 import com.revature.models.User;
 import com.revature.util.HibernateUtil;
 
@@ -35,6 +36,12 @@ public class UserDaoImpl implements UserDao {
 		} catch (Exception e) {
 			log.warn("Failed to find all users in database. Stack Trace: ", e);
 		}
+		return userList;
+	}
+	
+	@Override
+	public List<User> selectAllEmployees() {
+		List<User> userList = session.createNativeQuery("Select * from ers_users where ers_user_role_id = 1", User.class).list();
 		return userList;
 	}
 

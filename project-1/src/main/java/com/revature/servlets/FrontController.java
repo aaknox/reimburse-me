@@ -25,9 +25,11 @@ public class FrontController extends HttpServlet {
 			RequestHelper.processLogin(request, response);
 			break;
 		case "logout":
+			System.out.println("going to logout");
 			RequestHelper.processLogout(request, response);
 			break;
 		case "user":
+			System.out.println("going to view profile");
 			RequestHelper.processProfile(request, response);
 			break;
 		case "user/update":
@@ -37,6 +39,14 @@ public class FrontController extends HttpServlet {
 		case "reimbursement/submit":
 			System.out.println("submitting a reimbursement...");
 			RequestHelper.processSubmitReimb(request, response);
+			break;
+		case "user/add":
+			System.out.println("going to add new user...");
+			RequestHelper.processAddUser(request, response);
+			break;
+		case "user/delete":
+			System.out.println("removing user...");
+			RequestHelper.processDeleteUser(request, response);
 			break;
 		}
 		
@@ -56,6 +66,19 @@ public class FrontController extends HttpServlet {
 		case "reimbursements/view-pending":
 			System.out.println("viewing pending reimbursements ...");
 			RequestHelper.processViewPendingReimb(request, response);
+			break;
+			
+		case "reimbursements/view-all":
+			System.out.println("viewing all reimbursements ...");
+			RequestHelper.processViewAllReimb(request, response);
+			break;
+		case "users/view-all":
+			System.out.println("viewing all users...");
+			RequestHelper.processViewAllUsers(request, response);
+			break;
+		case "users/view-employees":
+			System.out.println("gathering all employee for dropdown list...");
+			RequestHelper.processViewAllEmployees(request, response);
 			break;
 		}
 	}

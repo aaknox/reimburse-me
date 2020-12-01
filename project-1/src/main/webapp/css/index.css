@@ -69,3 +69,15 @@ h1 {
     color: white;
     text-decoration: underline;
 }
+
+#link{
+	letter-spacing: 2px;
+	line-height: 3;
+	font-weight: 100;	
+	transition: 0.4s ease-in-out;
+}
+#link:hover{
+	font-weight: 200;
+	color: white;
+	text-decoration: underline;	
+}

@@ -63,3 +63,11 @@ input[type="submit"]:hover
     color: white;
     text-decoration: underline;
 }
+
+#admin-message{
+	margin: 0 20px;
+	font-weight: 300;
+	font-size: 0.8rem;
+	line-height: 2;
+	font-style: italic;
+}

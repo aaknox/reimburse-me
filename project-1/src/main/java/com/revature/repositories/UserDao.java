@@ -11,7 +11,7 @@ public interface UserDao {
 
 	// read
 	public List<User> selectAllUsers();
-
+	public List<User> selectAllEmployees();
 	public User selectUserByUsername(String username);
 	public User selectUserByUserId(int userId);
 	

@@ -37,6 +37,18 @@ public class UserServiceImpl implements UserService {
 		}
 		return list;
 	}
+	
+	@Override
+	public List<User> getAllEmployees() {
+		List<User> list = new ArrayList<User>();
+		try {
+			list = userDao.selectAllEmployees();
+			log.info("Mass retrieval of employees successful");
+		} catch (Exception e) {
+			log.warn("Error in getAllEmployees. Stack Trace: ", e);
+		}
+		return list;
+	}
 
 	@Override
 	public User getUserByUsername(String username) {
