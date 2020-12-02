@@ -99,7 +99,7 @@ public class ReimbursementServiceImpl implements ReimbursementService {
 	public void modifyReimbursement(Reimbursement r) {
 		log.info("Inside ReimbursementServiceImpl - updating given reimbursement info...");
 		try {
-			reimbDao.insertReimbursement(r);
+			reimbDao.updateReimbursement(r);
 			log.info("Update was successful!");
 		} catch (Exception e) {
 			log.warn("Update failed here. Stack Trace: ", e);

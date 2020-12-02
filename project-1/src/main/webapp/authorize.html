@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>ReimburseMe! || Authorize Reimbursement</title>
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link
+	href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+	rel="stylesheet">
+<script src="https://kit.fontawesome.com/b825c1b0e8.js"></script>
+<link rel="shortcut icon" href="img/money-icon-2.png"
+	type="image/x-icon" />
+<style type="text/css">
+* {
+	box-sizing: border-box;
+	font-family: 'Roboto', sans-serif;
+}
+
+h1, form {
+	margin: 20px;
+}
+
+h1 {
+	font-weight: 100;
+	font-size: 3rem;
+	letter-spacing: 2px;
+}
+
+label, select, input, button {
+	display: block;
+}
+
+select, input, button {
+	margin: 20px 5px;
+	padding: 10px 30px;
+	border: none;
+	border-radius: 20px;
+}
+
+select:focus, input:focus, button:focus {
+	outline: none !important;
+}
+
+input, button {
+	transition: 0.4s ease-in-out;
+}
+
+input:hover, button:hover {
+	cursor: pointer;
+	text-decoration: underline;
+	background: red;
+	color: white;
+}
+
+label {
+	font-weight: 400;
+	font-size: 1.5rem;
+	letter-spacing: 2px;
+}
+</style>
+<link rel="stylesheet" type="text/css" href="css/view-all-reimb.css">
+</head>
+<body>
+	<h1>Authorize Reimbursement</h1>
+	<form id="authorize-form"
+		onSubmit="sendDecision(event.preventDefault())">
+		<div class="container">
+			<table>
+				<thead>
+					<tr>
+						<th>Reimb ID</th>
+						<th>Amount</th>
+						<th>Description</th>
+						<th>Status</th>
+						<th>Type</th>
+						<th>Submitted On</th>
+						<th>Author ID</th>
+					</tr>
+				</thead>
+				<tbody id="table-data">
+					<tr>
+						<td>N/A</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<br> 
+		<label for="reimb-dropdown">
+		Reimbursement selected:
+			<select id="dropdown-menu" name="reimb">
+				<option value=0>ID</option>
+			</select>
+		</label>
+		<br>
+		<div id="status-list">
+			<h3>This request is being:</h3>
+			<label for="approved-choice">
+				APPROVED
+				<input type="radio" name="status" value=1>
+			</label>
+			<label for="denied-choice">
+				DENIED
+				<input type="radio" name="status" value=3>
+			</label>
+		</div>
+		<input type="submit" value="Authorize Decision">
+		<button onclick="goBack()">RETURN TO ADMIN PAGE</button>
+	</form>
+	<script src="js/sending-decision.js"></script>
+</body>
+</html>

@@ -40,6 +40,10 @@ public class FrontController extends HttpServlet {
 			System.out.println("submitting a reimbursement...");
 			RequestHelper.processSubmitReimb(request, response);
 			break;
+		case "reimbursement/authorize/decided":
+			System.out.println("updating a reimbursement...");
+			RequestHelper.processUpdateReimb(request, response);
+			break;
 		case "user/add":
 			System.out.println("going to add new user...");
 			RequestHelper.processAddUser(request, response);
@@ -72,7 +76,17 @@ public class FrontController extends HttpServlet {
 			System.out.println("viewing all reimbursements ...");
 			RequestHelper.processViewAllReimb(request, response);
 			break;
+		case "reimbursements/view-all-pending":
+		case "reimbursements/authorize":
+			System.out.println("viewing all pending reimbursements ...");
+			RequestHelper.processViewAllPendingReimb(request, response);
+			break;
+		case "reimbursements/view-all-by-user-id/search":
+			System.out.println("Doing a search ...");
+			RequestHelper.processSearch(request, response);
+			break;
 		case "users/view-all":
+		case "reimbursements/view-all-by-user-id":
 			System.out.println("viewing all users...");
 			RequestHelper.processViewAllUsers(request, response);
 			break;

@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,10 +14,10 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.models.Reimbursement;
 import com.revature.models.ReimbursementDTO;
+import com.revature.models.ReimbursementStatus;
 import com.revature.models.User;
 import com.revature.models.UserDTO;
 import com.revature.services.ReimbursementServiceImpl;
@@ -461,6 +462,150 @@ public class RequestHelper {
 		response.setStatus(204); // this means that the connection was successful but no user deletion!
 	}
 	log.info("leaving request helper now...");
+		
+	}
+
+	public static void processViewAllPendingReimb(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		log.info("Admin choose to view all pending reimbursements.");
+		System.out.println("Let's get started...");
+		
+		//This is a GET request, meaning no request body...
+		List<Reimbursement> list = reimbService.getReimbursementsByStatusId(2); //2 = pending status
+		List<ReimbursementDTO> listDTO = new ArrayList<>();
+		
+		//check that we got a new reimbursement in database
+		if (list != null) {
+			for (Reimbursement r : list) {
+				System.out.println(r);
+				//check if resolutiondate exist in r
+				if(r.getResolutionDateTime() == null) {
+					System.out.println("empty settings applied");
+					//run this reimbDTO with empty settings
+					listDTO.add(reimbService.convertToDTO(r));
+				}else {
+					System.out.println("full settings applied");
+					//run the conversion with full settings
+					listDTO.add(reimbService.convertToDTOFull(r));
+				}
+			}
+
+			String json = om.writeValueAsString(listDTO);
+			PrintWriter pw = response.getWriter();
+			pw.println(json);
+			System.out.println("JSON:\n" + json);
+			response.setContentType("application/json");
+			response.setStatus(200); // SUCCESSFUL!
+		}else {
+			System.out.println("Sorry, Azhya....i have failed you :(....");
+			response.setContentType("application/json");
+			response.setStatus(204); // this means that the connection was successful but select statement failed!
+		}
+		log.info("Leaving request helper at processViewAllPendingReimb()...");
+	}
+
+	public static void processUpdateReimb(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		log.info("Admin choose to update a reimbursement.");
+		System.out.println("Let's get started...");
+		BufferedReader reader = request.getReader();
+		StringBuilder s = new StringBuilder();
+
+		// we are just transferring our Reader data to our StringBuilder, line by line
+		String line = reader.readLine();
+		while (line != null) {
+			s.append(line);
+			line = reader.readLine();
+		}
+
+		String body = s.toString();
+		System.out.println(body);
+		// use body to make a reimbTemplate
+		DecisionTemplate decisionAttempt = om.readValue(body, DecisionTemplate.class);
+		//find the real reimbursement by rId
+		Reimbursement realReimb = reimbService.getReimbursementById(decisionAttempt.getrId());
+		System.out.println("Old version:\n" + realReimb);
+		//find the real resolver user
+		User resolver = userService.getUserByUserId(decisionAttempt.getResolverId());
+		//attach to data to a new reimbursement object
+		Reimbursement updateReimb = new Reimbursement(
+				realReimb.getrId(),
+				realReimb.getAmount(),
+				realReimb.getSubmissionDateTime(),
+				LocalDateTime.now(),
+				realReimb.getDescription(),
+				realReimb.getReceipt(),
+				realReimb.getAuthor(),
+				resolver,
+				new ReimbursementStatus(decisionAttempt.getStatusId(), decisionAttempt.getStatusName()),
+				realReimb.getType());
+		System.out.println("Updated version:\n" + updateReimb);
+		//update this reimb
+		reimbService.modifyReimbursement(updateReimb);
+		//prepare response
+		System.out.println("back in request helper. converting data into json...");
+		Reimbursement result = reimbService.getReimbursementById(updateReimb.getrId());
+		
+		//check that the update went through to database
+		if (result.getResolutionDateTime() != null) {
+			ReimbursementDTO reimbDTO = reimbService.convertToDTO(result);
+			System.out.println("Successful!");
+			PrintWriter pw = response.getWriter();
+			String json = om.writeValueAsString(reimbDTO);
+			pw.println(json);
+			System.out.println("JSON:\n" + json);
+			response.setContentType("application/json");
+			response.setStatus(200); // SUCCESSFUL!
+		} else {
+			System.out.println("Sorry, Azhya....i have failed you :(....");
+			response.setContentType("application/json");
+			response.setStatus(204); // this means that the connection was successful but insert failed!
+		}
+
+		log.info("Leaving request helper at processUpdateReimb()...");
+		
+	}
+
+	public static void processSearch(HttpServletRequest request, HttpServletResponse response) throws IOException{
+		log.info("User choose to view all reimbursements bu author id.");
+		System.out.println("Let's get started...");
+		
+		//This is a GET request, meaning no request body...
+		String paramStr = request.getQueryString();
+		
+		System.out.println("Param string: " + paramStr);
+		String idStr = paramStr.substring(3);
+		int authorId = Integer.parseInt(idStr);
+		System.out.println("TEST- My Author ID is: " + authorId);
+		List<Reimbursement> list = reimbService.getReimbursementsByAuthorId(authorId);
+		List<ReimbursementDTO> listDTO = new ArrayList<>();
+		
+		//check that we got a new reimbursement in database
+		if (list != null) {
+			for (Reimbursement r : list) {
+				System.out.println(r);
+				//check if resolutiondate exist in r
+				if(r.getResolutionDateTime() == null) {
+					System.out.println("empty settings applied");
+					//run this reimbDTO with empty settings
+					listDTO.add(reimbService.convertToDTO(r));
+				}else {
+					System.out.println("full settings applied");
+					//run the conversion with full settings
+					listDTO.add(reimbService.convertToDTOFull(r));
+				}
+			}
+
+			String json = om.writeValueAsString(listDTO);
+			PrintWriter pw = response.getWriter();
+			pw.println(json);
+			System.out.println("JSON:\n" + json);
+			response.setContentType("application/json");
+			response.setStatus(200); // SUCCESSFUL!
+		}else {
+			System.out.println("Sorry, Azhya....i have failed you :(....");
+			response.setContentType("application/json");
+			response.setStatus(204); // this means that the connection was successful but select statement failed!
+		}
+		log.info("Leaving request helper at processSearch()...");
 		
 	}
 

@@ -28,10 +28,14 @@
     <url-pattern>/users/view-employees</url-pattern>
     <url-pattern>/users/view-all</url-pattern>
     <url-pattern>/reimbursement/submit</url-pattern>
+    <url-pattern>/reimbursement/authorize/decided</url-pattern>
     <url-pattern>/reimbursements/view-all</url-pattern>
+    <url-pattern>/reimbursements/view-all-pending</url-pattern>
+    <url-pattern>/reimbursements/view-all-by-user-id</url-pattern>
+    <url-pattern>/reimbursements/view-all-by-user-id/search</url-pattern>
     <url-pattern>/reimbursements/view-past</url-pattern>
     <url-pattern>/reimbursements/view-pending</url-pattern>
-    <url-pattern>/authorize</url-pattern>
+    <url-pattern>/reimbursements/authorize</url-pattern>
     <url-pattern>/help</url-pattern>
   </servlet-mapping>
 </web-app>

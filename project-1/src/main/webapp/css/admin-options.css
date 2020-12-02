@@ -14,7 +14,7 @@
 
 #option {
     display: inline-block;
-    width: 15% !important;
+    width: 10% !important;
     margin: 20px;
     transition: 0.2s ease-in-out;
     vertical-align: top;
@@ -27,13 +27,13 @@
 #option .fas {
     display: block;
     text-align: center;
-    font-size: 5rem;
+    font-size: 2.5rem;
     margin-bottom: 30px;
 }
 
 #option a {
-	letter-spacing: 2px;
-    font-size: 1.1rem;
+    letter-spacing: 2px;
+    font-size: 1rem;
     font-weight: 400;
     text-align: center;
     cursor: pointer;

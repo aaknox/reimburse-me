@@ -107,6 +107,7 @@ public class ReimbursementDaoImpl implements ReimbursementDao {
 		Transaction tx = session.beginTransaction();
 
 		try {
+			session.merge(reimb);
 			session.update(reimb);
 		} catch (Exception e) {
 			log.warn("Failed to update reimb into database. Stack Trace: ", e);
