@@ -19,15 +19,16 @@
 DROP TABLE IF EXISTS ers_reimbursements;
 DROP TABLE IF EXISTS ers_reimbursements_status;
 DROP TABLE IF EXISTS ers_reimbursements_types;
+DROP TABLE IF EXISTS ers_verification;
 DROP TABLE IF EXISTS ers_users;
 DROP TABLE IF EXISTS ers_user_roles;
+
 
 --SEQUENCES
 DROP SEQUENCE IF EXISTS reimb_sequence;
 /************************************************************
  * 			CREATE TABLES / ADD CONSTRAINTS
  ************************************************************/
-
 CREATE TABLE ers_users(
 	ers_user_id serial PRIMARY KEY,
 	ers_user_role_id int NOT NULL,
@@ -49,6 +50,17 @@ ALTER TABLE ers_users
 ADD CONSTRAINT fk_constraint_usersToUserRoles
 FOREIGN KEY (ers_user_role_id)
 REFERENCES ers_user_roles (ers_role_id);
+
+CREATE TABLE ers_verification(
+	ers_ver_id int PRIMARY KEY,
+	ers_ver_password varchar(50) NOT NULL,
+	ers_ver_hash varchar(255) UNIQUE NOT NULL
+);
+
+ALTER TABLE ers_verification
+ADD CONSTRAINT fk_constraint_verificationToUsers
+FOREIGN KEY (ers_ver_id)
+REFERENCES ers_users (ers_user_id);
 
 --create sequence for reimbursement id 
 CREATE SEQUENCE reimb_sequence
@@ -125,6 +137,12 @@ VALUES (1, 'employee002', 'password', 'Steve', 'Harvey', 'sharvey@gmail.com', '2
 INSERT INTO ers_users (ers_user_role_id, ers_username, ers_user_password, ers_user_first_name, ers_user_last_name, ers_user_email, ers_user_hire_date)
 VALUES (2, 'aaknox', 'password', 'Azhya', 'Knox', 'azhya.knox@gmail.com', '2018-12-18');
 
+
+--ers ver table data
+INSERT INTO ers_verification VALUES (1, 'password', '$2a$06$OCYBzV8VsUP.EMBoSAvazOv.bhg9cfb2Krmi07Bfgfqf77/mtq98C');
+INSERT INTO ers_verification VALUES (2, 'password', '$2a$06$uT5IIo1U/uOPv24COWQl7OHl.t5q2frP2CgD5iSp7or1lPhTeDq9y');
+INSERT INTO ers_verification VALUES (3, 'password', '$2a$06$fSDXJ/UY6WsXwGrctdRzm.jSAPes5p0.ejaKGVq0IryIEI7t6kRnq');
+
 -- ers_reimbursements_types table data
 INSERT INTO ers_reimbursements_types(type_name) VALUES ('LODGING');
 INSERT INTO ers_reimbursements_types(type_name) VALUES ('TRAVEL');
@@ -161,6 +179,7 @@ VALUES (600.00, '2020-07-29 13:25:25', '2020-08-15 06:30:48', 'relocation expens
 /************************************************************
  * 			SELECT ALL STATEMENTS
  ************************************************************/
+SELECT * FROM ers_verification ORDER BY ers_ver_id;
 SELECT * FROM ers_users ORDER BY ers_user_id;
 SELECT * FROM ers_user_roles ORDER BY ers_role_id;
 SELECT * FROM ers_reimbursements ORDER BY reimb_id;

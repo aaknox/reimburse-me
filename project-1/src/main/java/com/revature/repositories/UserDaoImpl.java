@@ -8,6 +8,7 @@ import org.hibernate.Session;
 
 import com.revature.models.User;
 import com.revature.util.HibernateUtil;
+import com.revature.util.PasswordHasher;
 
 public class UserDaoImpl implements UserDao {
 	private static Logger log = Logger.getLogger(UserDaoImpl.class);

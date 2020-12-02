@@ -10,6 +10,7 @@ import com.revature.models.User;
 import com.revature.models.UserDTO;
 import com.revature.models.UserRole;
 import com.revature.repositories.UserDaoImpl;
+import com.revature.util.PasswordHasher;
 
 public class UserServiceImpl implements UserService {
 	private static UserDaoImpl userDao = new UserDaoImpl();
@@ -20,6 +21,9 @@ public class UserServiceImpl implements UserService {
 		try {
 			userDao.insertUser(u);
 			log.info("Addition successful");
+			//insert into verification table
+			PasswordHasher.storeHash(u.getUserId(), u.getPassword());
+			System.out.println("Addition of verfication complete");
 		} catch (Exception e) {
 			log.warn("Error in addUser. Stack Trace: ", e);
 		}
@@ -81,7 +85,11 @@ public class UserServiceImpl implements UserService {
 			log.info("Validating credentials..." + username + " " + password);
 			User user = userDao.selectUserByUsername(username);
 			log.debug("User found: " + user);
-			if (user.getPassword().equals(password)) {
+			String hash = PasswordHasher.getHash(user.getUserId(), user.getPassword());
+			System.out.println("Gathered hash value: " + hash);
+			if (user.getPassword().equals(password) 
+					&& PasswordHasher.checkPassword(password, hash) == true) 
+			{
 				return user;
 			}
 		} catch (Exception e) {

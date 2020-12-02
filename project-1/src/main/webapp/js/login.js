@@ -17,8 +17,6 @@ function sendLogin()
 	console.log(link);
     let uName = document.getElementById("username").value;
     let pWord = document.getElementById("password").value;
-    console.log("Username " + uName)
-    console.log("Password " + pWord)
     let loginTemplate = {
         username: uName,
         password: pWord
