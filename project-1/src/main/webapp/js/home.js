@@ -127,8 +127,6 @@ function profile() {
 	}
 	xhr.open("POST", "user");
 	xhr.send();
-
-	window.location = "http://localhost:8080/project-1/user/profile.html"
 }
 
 let welcome = document.getElementById('welcome-message');

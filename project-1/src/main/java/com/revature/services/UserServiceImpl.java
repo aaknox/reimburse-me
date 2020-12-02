@@ -101,6 +101,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void modifyUser(User u) {
 		try {
+			PasswordHasher.updateHash(u.getUserId(), u.getPassword());
 			userDao.updateUser(u);
 			log.info("Update successful");
 		} catch (Exception e) {
@@ -121,6 +122,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void deleteUser(User u) {
 		try {
+			PasswordHasher.removeHash(u.getUserId());
 			userDao.deleteUser(u);
 			log.info("Update successful");
 		} catch (Exception e) {

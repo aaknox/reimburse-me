@@ -46,7 +46,8 @@ function sendProfileUpdate(){
 		}
 		if (this.readyState === 4 && this.status === 200) {
 			console.log("Success");
-
+			//save new user data
+			sessionStorage.setItem('currentUser', this.responseText);
 			var reason = {
 				code : this.status,
 				details : 'Your profile has successfully been updated!'

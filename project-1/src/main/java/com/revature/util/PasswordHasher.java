@@ -46,6 +46,31 @@ public class PasswordHasher {
 		}
 		return "";
 	}
+	public static void removeHash(int id) {
+		try (Connection conn = ConnectionUtil.getConnection()){
+			String sql = "DELETE FROM ers_verification WHERE ers_ver_id =?;";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, id);
+			ps.executeUpdate();
+			System.out.println("Deletion data complete!");
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void updateHash(int id, String password) {
+		try (Connection conn = ConnectionUtil.getConnection()){
+			String sql = "UPDATE ers_verification SET ers_ver_password = ?, ers_ver_hash = ? WHERE ers_ver_id =?;";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, password);
+			ps.setString(2, hashPassword(password));
+			ps.setInt(3, id);
+			ps.executeUpdate();
+			System.out.println("Update data complete!");
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+	}
 
 	public static boolean checkPassword(String candidate, String hashed) {
 		// Check that an unencrypted password matches one that has
