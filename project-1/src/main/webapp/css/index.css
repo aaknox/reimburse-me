@@ -1,12 +1,8 @@
 html {
-    background: rgb(255, 255, 255);
-    /* Old browsers */
-    background: -moz-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(232, 89, 67, 1) 80%, rgba(211, 14, 0, 1) 100%);
-    /* FF3.6-15 */
-    background: -webkit-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(232, 89, 67, 1) 80%, rgba(211, 14, 0, 1) 100%);
-    /* Chrome10-25,Safari5.1-6 */
-    background: linear-gradient(to bottom, rgba(255, 255, 255, 1) 0%, rgba(232, 89, 67, 1) 80%, rgba(211, 14, 0, 1) 100%);
-    /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    background: rgb(94,184,229); /* Old browsers */
+	background: -moz-linear-gradient(top, rgba(94,184,229,1) 0%, rgba(46,123,200,1) 50%, rgba(43,54,104,1) 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top, rgba(94,184,229,1) 0%,rgba(46,123,200,1) 50%,rgba(43,54,104,1) 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom, rgba(94,184,229,1) 0%,rgba(46,123,200,1) 50%,rgba(43,54,104,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
     background-repeat: no-repeat;
     height: 100%;
     color: black;
@@ -71,13 +67,13 @@ h1 {
 }
 
 #link{
+	color: ##6f1cb1;
 	letter-spacing: 2px;
 	line-height: 3;
-	font-weight: 100;	
+	font-weight: 600;	
 	transition: 0.4s ease-in-out;
 }
 #link:hover{
-	font-weight: 200;
 	color: white;
 	text-decoration: underline;	
 }

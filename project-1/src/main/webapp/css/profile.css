@@ -13,7 +13,8 @@ button:focus {
 }
 
 html{
-	background-color: rgba(0, 0, 0, 0.4);
+	background-color: #2D2D61;
+	color: #F2F4F3;
 }
 
 h1{
@@ -24,8 +25,9 @@ h1{
 
 label, h3{
 	margin: 10px 20px;
-	font-weight: 600;
+	font-weight: 500;
 	display: block;
+	letter-spacing: 1.5px;
 }
 
 #role-input-container{
@@ -42,6 +44,7 @@ input[type="password"] {
     border: none;
     border-radius: 20px;
     text-align: left;
+   	box-shadow: 1px 1px 10px 1px rgba(0,0,0,0.75);
 }
 
 button,

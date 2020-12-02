@@ -13,7 +13,7 @@ button:focus {
 }
 
 html{
-	background-color: rgba(0, 0, 0, 0.4);
+	background-color: #2E7BC8;
 }
 
 h1{
@@ -46,10 +46,15 @@ input[type="file"]{
     text-align: left;
 }
 
+input[type="radio"]{
+	margin-right: 20px;
+}
+
 textarea, 
 input[type="file"]{
 	display: block;
-	text-align: left;
+    text-align: left;
+    margin: 10px 0;
 }
 
 textarea{
@@ -75,7 +80,7 @@ input[type="submit"]
 button:hover,
 input[type="submit"]:hover
 {
-    background-color: tomato;
-    color: white;
+    background-color: #5EB8E5;
+    color: #2D2D61;
     text-decoration: underline;
 }

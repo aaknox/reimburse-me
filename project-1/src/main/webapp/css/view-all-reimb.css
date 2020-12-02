@@ -14,20 +14,23 @@ input:focus, button:focus, textarea:focus {
 }
 
 body {
-	background-color: #91ced4;
+	background: rgb(94,184,229); /* Old browsers */
+	background: -moz-linear-gradient(left, rgba(94,184,229,1) 0%, rgba(46,123,200,1) 50%, rgba(43,54,104,1) 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(left, rgba(94,184,229,1) 0%,rgba(46,123,200,1) 50%,rgba(43,54,104,1) 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to right, rgba(94,184,229,1) 0%,rgba(46,123,200,1) 50%,rgba(43,54,104,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 }
 span{
 	display: inline;
 	font-weight: 500;
 	font-size: 1.2rem;
+	color: #2D2D61 !important;
 }
 
 .title{
-	color: #697772 !important;
-	font-weight: 100 !important;
+	color: #2D2D61 !important;
+	font-weight: 300 !important;
 	line-height: 2;
 	margin: 20px;
-	font-weight: 500;
 	font-size: 1.5rem;
 	letter-spacing: 2px;
 }
@@ -62,9 +65,11 @@ button:after{
 
 table {
 	width: 100%;
+	box-shadow: 0 0 20px rgba(0,0,0,0.1);
 }
 
 table td, table th {
+	background-color: rgba(255,255,255,0.2);
 	color: #2b686e;
 	padding: 10px;
 }
@@ -91,6 +96,10 @@ table tr:nth-child(2n) {
 
 table tr:nth-child(2n+1) {
 	background-color: #edf7f8;
+}
+
+tbody tr:hover {
+	background-color: rgba(255,255,255,0.3);
 }
 
 @media screen and (max-width: 700px) {
