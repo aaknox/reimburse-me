@@ -16,7 +16,7 @@
 - An Employee can view their resolved reimbursement requests
 - An Employee can view their information
 - An Employee can update their information
-- An Employee receives an email when one of their reimbursement requests is resolved (optional)
+<!-- - An Employee receives an email when one of their reimbursement requests is resolved (optional) -->
 
 #### Manager User Stories
 - A Manager can login
@@ -24,7 +24,7 @@
 - A Manager can logout
 - A Manager can approve/deny pending reimbursement requests
 - A Manager can view all pending requests from all employees
-- A Manager can view images of the receipts from reimbursement requests (extra credit)
+<!-- - A Manager can view images of the receipts from reimbursement requests (extra credit) -->
 - A Manager can view all resolved requests from all employees and see which manager resolved it
 - A Manager can view all Employees
 - A Manager can view reimbursement requests from a single Employee 
@@ -59,7 +59,7 @@ Employees must select the type of reimbursement as: LODGING, TRAVEL, FOOD, or OT
 * The middle tier shall follow proper layered architecture, have reasonable (~70%) test coverage of the service layer, and implement log4j for appropriate logging. 
 
 **Stretch Goals:** *These will count for extra credit and are entirely optional*
-* Replace HTML/JavaScript with an Angular single page application. (We will learn Angular in Week 5)
+<!-- * Replace HTML/JavaScript with an Angular single page application. (We will learn Angular in Week 5) -->
 * Users can upload a document or image of their receipt when submitting reimbursements which can stored in the database and reviewed by a financial manager.
-* Application shall be hosted remotely on an EC2.
-* Static files (webpages) shall be hosted on an S3 bucket. 
+<!-- * Application shall be hosted remotely on an EC2.
+* Static files (webpages) shall be hosted on an S3 bucket. --> 
