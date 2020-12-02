@@ -17,15 +17,15 @@
 		<property name="hibernate.hbm2ddl.auto">validate</property>
 
 		<!-- Offline DB Credentials -->
-		<property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/employee-reimbursement-db
-		</property>
-		<property name="hibernate.connection.username">postgres</property>
-		<property name="hibernate.connection.password">password</property>
+<!-- 		<property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/employee-reimbursement-db -->
+<!-- 		</property> -->
+<!-- 		<property name="hibernate.connection.username">postgres</property> -->
+<!-- 		<property name="hibernate.connection.password">password</property> -->
 
 		<!-- AWS RDS Credentials -->
-		<!--<property name="hibernate.connection.url">jdbc:postgresql://aak-ers-api.c6gi8vtgydns.us-east-2.rds.amazonaws.com:5432/ers_database 
-			</property> <property name="hibernate.connection.username">postgres</property> 
-			<property name="hibernate.connection.password">password</property> -->
+		<property name="hibernate.connection.url">jdbc:postgresql://reimburse-me.c6gi8vtgydns.us-east-2.rds.amazonaws.com:5432/ers_db</property>
+		<property name="hibernate.connection.username">postgres</property> 
+		<property name="hibernate.connection.password">password</property>
 
 		<!-- add classes to map from here... -->
 		<mapping class="com.revature.models.User" />

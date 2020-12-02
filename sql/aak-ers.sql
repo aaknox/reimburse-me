@@ -143,6 +143,20 @@ INSERT INTO ers_reimbursements(reimb_amount, reimb_submitted, reimb_resolved, re
 VALUES (250.00, '2020-06-26 19:30:26', NULL, 'for 2020 devops convention', 'hotel-receipt.png', 2, NULL, 2, 1);
 INSERT INTO ers_reimbursements(reimb_amount, reimb_submitted, reimb_resolved, reimb_description, reimb_receipt, reimb_author_id, reimb_resolver_id, reimb_status_id, reimb_type_id)
 VALUES (600.75, '2020-09-14 09:47:33', NULL, 'for crazy office party', 'xxxreceipt.jpg', 1, NULL, 2, 4);
+INSERT INTO ers_reimbursements(reimb_amount, reimb_submitted, reimb_resolved, reimb_description, reimb_receipt, reimb_author_id, reimb_resolver_id, reimb_status_id, reimb_type_id)
+VALUES (315.25, '2020-09-14 09:47:33', NULL, 'upgrades to office computers', 'pc-receipt.jpg', 1, NULL, 2, 4);
+INSERT INTO ers_reimbursements(reimb_amount, reimb_submitted, reimb_resolved, reimb_description, reimb_receipt, reimb_author_id, reimb_resolver_id, reimb_status_id, reimb_type_id)
+VALUES (200.00, '2020-03-14 09:47:33', NULL, 'TEST', 'test-receipt.jpg', 1, NULL, 2, 4);
+INSERT INTO ers_reimbursements(reimb_amount, reimb_submitted, reimb_resolved, reimb_description, reimb_receipt, reimb_author_id, reimb_resolver_id, reimb_status_id, reimb_type_id) 
+VALUES (50.45, '2020-06-01 17:25:21', '2020-06-25 09:30:21', 'office supplies', 'office-depot-receipt.jpg', 1, 3, 1, 4);
+INSERT INTO ers_reimbursements(reimb_amount, reimb_submitted, reimb_resolved, reimb_description, reimb_receipt, reimb_author_id, reimb_resolver_id, reimb_status_id, reimb_type_id)
+VALUES (100.00, '2020-10-26 10:37:24', '2020-11-02 11:59:07', 'Boss Bachelor Party Entertainment', 'club-banana-receipt.png', 2, 3, 3, 4);
+INSERT INTO ers_reimbursements(reimb_amount, reimb_submitted, reimb_resolved, reimb_description, reimb_receipt, reimb_author_id, reimb_resolver_id, reimb_status_id, reimb_type_id) 
+VALUES (260.53, '2020-09-05 17:25:21', '2020-09-09 09:30:21', 'damage to company rental car', 'wreakage-invoice.jpg', 1, 3, 1, 2);
+INSERT INTO ers_reimbursements(reimb_amount, reimb_submitted, reimb_resolved, reimb_description, reimb_receipt, reimb_author_id, reimb_resolver_id, reimb_status_id, reimb_type_id)
+VALUES (10.00, '2020-04-01 10:37:24', '2020-04-02 11:59:07', 'Bob owes me some money', 'bob-receipt.png', 2, 3, 3, 4);
+INSERT INTO ers_reimbursements(reimb_amount, reimb_submitted, reimb_resolved, reimb_description, reimb_receipt, reimb_author_id, reimb_resolver_id, reimb_status_id, reimb_type_id) 
+VALUES (600.00, '2020-07-29 13:25:25', '2020-08-15 06:30:48', 'relocation expenses', 'condo-invoice.jpg', 1, 3, 1, 2);
 
 /************************************************************
  * 			SELECT ALL STATEMENTS
