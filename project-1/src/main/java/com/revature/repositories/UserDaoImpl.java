@@ -6,7 +6,6 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 
-import com.revature.models.Reimbursement;
 import com.revature.models.User;
 import com.revature.util.HibernateUtil;
 
