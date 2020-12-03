@@ -3,9 +3,11 @@ package com.revature.util;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -149,7 +151,6 @@ public class RequestHelper {
 		System.out.println(body);
 		// use body to make a reimbTemplate
 		ReimbTemplate reimbAttempt = om.readValue(body, ReimbTemplate.class);
-
 			// convert template into POJO
 			Reimbursement r = reimbService.convertToReimb(reimbAttempt);
 			// insert new reimb into database
@@ -195,6 +196,11 @@ public class RequestHelper {
 		if (list != null) {
 			for (Reimbursement r : list) {
 				listDTO.add(reimbService.convertToDTOFull(r));
+				for (int i = 0; i < list.size(); i++) {
+					String s = Base64.getEncoder().encodeToString(listDTO.get(i).getReceipt().getBytes());
+					listDTO.get(i).setReceipt(s);
+					
+				}
 			}
 
 			String json = om.writeValueAsString(listDTO);
@@ -229,6 +235,11 @@ public class RequestHelper {
 		if (list != null) {
 			for (Reimbursement r : list) {
 				listDTO.add(reimbService.convertToDTO(r));
+			}
+			
+			for (int i = 0; i < listDTO.size(); i++) {
+				String s = Base64.getEncoder().encodeToString(listDTO.get(i).getReceipt().getBytes());
+				listDTO.get(i).setReceipt(s);
 			}
 
 			String json = om.writeValueAsString(listDTO);

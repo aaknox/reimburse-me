@@ -3,19 +3,22 @@ function goBack() {
 	window.location = "http://localhost:8080/project-1/home.html";
 }
 
-function showReciept() {
+function readReciept() {
 	console.log('user submitted a receipt!');
-
-	var fileInputField = document.getElementsByName('reciept');
-
-	if (fileInputField[0].files == 0) {
-		console.log('Zero files entered!');
-	} else {
-		var files = fileInputField[0].files;
-		console.log(files);
-		var fLength = files.length;
-		console.log(`User submitted ${fLength} receipts!`);
-	}
+		  
+    if (this.files && this.files[0]) {
+    
+	    var FR= new FileReader();
+	    
+	    FR.addEventListener("load", function(e) {
+	      console.log(e.target.result);
+	      document.getElementById("img").src = e.target.result;
+	      document.getElementById("b64").innerHTML = e.target.result;
+	    }); 
+	    
+	    FR.readAsDataURL( this.files[0] );
+    }
+		  
 }
 
 function roleRadioValue() {
@@ -34,7 +37,8 @@ function sendReimbRequest() {
 	console.log('reimbursement submitted to server...');
 	let myAmount = document.getElementById('amount').value;
 	let myDescription = document.getElementById('description').value;
-	let myReceipt = document.getElementById('reciept-file').value;
+	let myReceipt = document.getElementById("b64").innerHTML;
+	console.log( myReceipt);
 	let myAuthorId = document.getElementById('author-id').value;
 	let type = roleRadioValue();
 	let typeName;
@@ -116,3 +120,5 @@ if (userString === null) {
 		author.value = currentUser.userId;
 	}
 }
+
+document.getElementById("reciept-file").addEventListener("change", readReciept);

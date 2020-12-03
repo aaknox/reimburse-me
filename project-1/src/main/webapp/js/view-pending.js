@@ -34,6 +34,7 @@ if (userString === null) {
 			let submitDate = row.insertCell(5);
 			let resolveDate = row.insertCell(6);
 			let managerId = row.insertCell(7);
+			let imgBtn = row.insertCell(8);
 			
 			id.innerHTML = d.rId;
 			amount.innerHTML = `$${d.amount}`;
@@ -56,6 +57,8 @@ if (userString === null) {
 			}else{
 				managerId.innerHTML = d.resolverId;
 			}
+			
+			imgBtn.innerHTML = `<a href="${d.receipt}" target="_blank">Link</a>`;
 		});
 	}
 }

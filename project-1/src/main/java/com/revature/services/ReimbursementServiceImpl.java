@@ -1,8 +1,10 @@
 package com.revature.services;
 
+import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -128,6 +130,17 @@ public class ReimbursementServiceImpl implements ReimbursementService {
 		User author = userServiceImpl.getUserByUserId(Integer.valueOf(temp.getAuthorId()));
 		User resolver = new User();
 		
+		try {
+            byte[] fileArray = Base64.getEncoder().encode(temp.getReceipt().getBytes());
+            byte[] decodedString = Base64.getDecoder().decode(new String(fileArray).getBytes("UTF-8"));
+            System.out.println(new String(decodedString));
+            temp.setReceipt(new String(decodedString));
+        } catch (UnsupportedEncodingException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+		
+		System.out.println(temp.getReceipt());
 		return new Reimbursement(
 					BigDecimal.valueOf(rAmount),
 					sDateTime, rDateTime,
@@ -160,7 +173,7 @@ public class ReimbursementServiceImpl implements ReimbursementService {
 
 	public ReimbursementDTO convertToDTOFull(Reimbursement r){
 		//check for any empty resolverIds and resolutionDates
-		System.out.println(r);
+		log.info(r);
 		return new ReimbursementDTO(
 				r.getrId(),
 				r.getAmount().toPlainString(),

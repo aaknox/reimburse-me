@@ -28,9 +28,11 @@
 		</label>
 		<label for="reciept">
 			Upload Receipt(s):
-			<input type="file" name="reciept" id="reciept-file" multiple size="10" onchange="showReciept()" required 
+			<input type="file" name="reciept" id="reciept-file" multiple size="10" required 
 			oninvalid="this.setCustomValidity('Please upload needed receipt(s) for this reimbursement!')"
 			oninput="this.setCustomValidity('')">
+			<span id="b64"></span>
+			<img id="img" height="150" width="150" style="border: 1px solid black; background-color: gray;">
 		</label>
 		<p id="file-display"></p>
 		<label for="author-id">
