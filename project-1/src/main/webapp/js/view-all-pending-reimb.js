@@ -27,6 +27,7 @@ if (dataString === null) {
 			let type = row.insertCell(4);
 			let submitDate = row.insertCell(5);
 			let authorId = row.insertCell(6);
+			let imgBtn = row.insertCell(7);
 			
 			id.innerHTML = d.rId;
 			amount.innerHTML = `$${d.amount}`;
@@ -36,6 +37,27 @@ if (dataString === null) {
 			let subStr = d.submissionDate.replace("T", " | Time: ");
 			submitDate.innerHTML = subStr;
 			authorId.innerHTML = d.authorId;
+			console.log(d.receipt);
+			var link = document.createElement('a');
+			link.href = "view-receipt.html";
+			link.target = "_self";
+			link.onclick = function(){
+				var pictureData = {
+					receipt: d.receipt	
+				};
+				
+				sessionStorage.setItem('picture', JSON.stringify(pictureData));
+				console.log(sessionStorage.getItem('picture'));
+			};
+			
+			var img = document.createElement('img');
+			img.height = "50";
+			img.width = "50";
+			img.src = d.receipt;
+			img.alt = 'Receipt Image';
+			
+			link.appendChild(img);
+			imgBtn.appendChild(link);
 			
 		});
 	}

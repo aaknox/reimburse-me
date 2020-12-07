@@ -3,7 +3,6 @@ package com.revature.util;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -121,13 +120,29 @@ public class RequestHelper {
 
 	public static void processProfile(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		log.info("User choose to view their profile.");
-		response.setContentType("application/json");
-		PrintWriter pw = response.getWriter();
-		HttpSession session = request.getSession();
-		User profile = userService.getUserByUsername((String) session.getAttribute("username"));
+		System.out.println("Let's get started...");
+		BufferedReader reader = request.getReader();
+		StringBuilder s = new StringBuilder();
+
+		// we are just transferring our Reader data to our StringBuilder, line by line
+		String line = reader.readLine();
+		while (line != null) {
+			s.append(line);
+			line = reader.readLine();
+		}
+
+		String body = s.toString();
+		System.out.println(body);
+		UserDTO template = om.readValue(body, UserDTO.class);
+		System.out.println(template);
+		
+		
+		User profile = userService.getUserByUsername(template.getUsername());
 		UserDTO eDTO = userService.convertToDTO(profile);
 		System.out.println(eDTO);
 
+		response.setContentType("application/json");
+		PrintWriter pw = response.getWriter();
 		String json = om.writeValueAsString(eDTO);
 
 		pw.println(json);
@@ -196,11 +211,6 @@ public class RequestHelper {
 		if (list != null) {
 			for (Reimbursement r : list) {
 				listDTO.add(reimbService.convertToDTOFull(r));
-				for (int i = 0; i < list.size(); i++) {
-					String s = Base64.getEncoder().encodeToString(listDTO.get(i).getReceipt().getBytes());
-					listDTO.get(i).setReceipt(s);
-					
-				}
 			}
 
 			String json = om.writeValueAsString(listDTO);
@@ -233,13 +243,10 @@ public class RequestHelper {
 		
 		//check that we got a new reimbursement in database
 		if (list != null) {
-			for (Reimbursement r : list) {
+			for (int i = 0; i < list.size(); i++) {
+				Reimbursement r = list.get(i);
 				listDTO.add(reimbService.convertToDTO(r));
-			}
-			
-			for (int i = 0; i < listDTO.size(); i++) {
-				String s = Base64.getEncoder().encodeToString(listDTO.get(i).getReceipt().getBytes());
-				listDTO.get(i).setReceipt(s);
+				log.info("****TEST: " + listDTO.get(i) + "********");
 			}
 
 			String json = om.writeValueAsString(listDTO);

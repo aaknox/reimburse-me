@@ -1,11 +1,13 @@
 package com.revature.services;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
+
 
 import org.apache.log4j.Logger;
 
@@ -22,7 +24,7 @@ public class ReimbursementServiceImpl implements ReimbursementService {
 	private static Logger log = Logger.getLogger(ReimbursementServiceImpl.class);
 	private static ReimbursementDao reimbDao = new ReimbursementDaoImpl();
 	private static UserServiceImpl userServiceImpl = new UserServiceImpl();
-	
+
 	@Override
 	public int addReimbursement(Reimbursement r) {
 		log.info("Inside ReimbursementServiceImpl - adding reimbursement to database...");
@@ -67,7 +69,7 @@ public class ReimbursementServiceImpl implements ReimbursementService {
 		log.info("Got the reimbursement list marked with status id: " + statusId);
 		return list;
 	}
-	
+
 	@Override
 	public List<Reimbursement> getReimbursementsByAuthorId(int authorId) {
 		log.info(
@@ -76,7 +78,7 @@ public class ReimbursementServiceImpl implements ReimbursementService {
 		log.info("Got the reimbursement list marked with author id: " + authorId);
 		return list;
 	}
-	
+
 	@Override
 	public List<Reimbursement> getReimbursementsByAuthorId_NotPending(int authorId) {
 		log.info(
@@ -86,7 +88,7 @@ public class ReimbursementServiceImpl implements ReimbursementService {
 		log.info("Got the reimbursement list marked with author id: " + authorId);
 		return list;
 	}
-	
+
 	@Override
 	public List<Reimbursement> getReimbursementsByAuthorId_Pending(int authorId) {
 		log.info(
@@ -118,7 +120,7 @@ public class ReimbursementServiceImpl implements ReimbursementService {
 			log.warn("Deletion failed here. Stack Trace: ", e);
 		}
 	}
-	
+
 	public Reimbursement convertToReimb(ReimbTemplate temp) {
 		double rAmount = Double.parseDouble(temp.getAmount());
 		LocalDateTime sDateTime = LocalDateTime.now();
@@ -129,64 +131,54 @@ public class ReimbursementServiceImpl implements ReimbursementService {
 		String typeName = Arrays.asList(temp.getReimbursementType()).get(1);
 		User author = userServiceImpl.getUserByUserId(Integer.valueOf(temp.getAuthorId()));
 		User resolver = new User();
-		
+
 		try {
-            byte[] fileArray = Base64.getEncoder().encode(temp.getReceipt().getBytes());
-            byte[] decodedString = Base64.getDecoder().decode(new String(fileArray).getBytes("UTF-8"));
-            System.out.println(new String(decodedString));
-            temp.setReceipt(new String(decodedString));
-        } catch (UnsupportedEncodingException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-		
+			byte[] fileArray = Base64.getEncoder().encode(temp.getReceipt().getBytes());
+			byte[] decodedString = Base64.getDecoder().decode(new String(fileArray).getBytes("UTF-8"));
+			System.out.println(new String(decodedString));
+			temp.setReceipt(new String(decodedString));
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		System.out.println(temp.getReceipt());
-		return new Reimbursement(
-					BigDecimal.valueOf(rAmount),
-					sDateTime, rDateTime,
-					temp.getDescription(),
-					temp.getReceipt().getBytes(),
-					author,
-					resolver,
-					new ReimbursementStatus(statusId, statusName),
-					new ReimbursementType(typeId, typeName)
-				);
-	}
-	
-	public ReimbursementDTO convertToDTO(Reimbursement r) {
-		System.out.println(r);
-		return new ReimbursementDTO(
-					r.getrId(),
-					r.getAmount().toPlainString(),
-					r.getSubmissionDateTime().toString(),
-					"",
-					r.getDescription(),
-					r.getReceipt().toString(),
-					r.getAuthor().getUserId(),
-					0,
-					r.getStatus().getStatusId(),
-					r.getStatus().getStatusName(),
-					r.getType().getTypeId(),
-					r.getType().getTypeName()
-				);
+		return new Reimbursement(BigDecimal.valueOf(rAmount), sDateTime, rDateTime, temp.getDescription(),
+				temp.getReceipt().getBytes(), author, resolver, new ReimbursementStatus(statusId, statusName),
+				new ReimbursementType(typeId, typeName));
 	}
 
-	public ReimbursementDTO convertToDTOFull(Reimbursement r){
-		//check for any empty resolverIds and resolutionDates
+	public ReimbursementDTO convertToDTO(Reimbursement r) throws IOException {
+		// convert all receipt byte arrays to string for DTO conversion
+		log.info("Receipt before encoding:" + r.getReceipt());
+		String encodedString = Base64.getEncoder().encodeToString(r.getReceipt());
+		System.out.println(encodedString);
+		Base64.Decoder decoder = Base64.getDecoder();
+		byte[] decodedByteArray = decoder.decode(encodedString);
+		// Verify the decoded string
+		String realReceipt = new String(decodedByteArray);
+		System.out.println(realReceipt);
 		log.info(r);
-		return new ReimbursementDTO(
-				r.getrId(),
-				r.getAmount().toPlainString(),
-				r.getSubmissionDateTime().toString(),
-				r.getResolutionDateTime().toString(),
-				r.getDescription(),
-				r.getReceipt().toString(),
-				r.getAuthor().getUserId(),
-				r.getResolver().getUserId(),
-				r.getStatus().getStatusId(),
-				r.getStatus().getStatusName(),
-				r.getType().getTypeId(),
-				r.getType().getTypeName()
-		);
+		return new ReimbursementDTO(r.getrId(), r.getAmount().toPlainString(), r.getSubmissionDateTime().toString(), "",
+				r.getDescription(), realReceipt, r.getAuthor().getUserId(), 0, r.getStatus().getStatusId(),
+				r.getStatus().getStatusName(), r.getType().getTypeId(), r.getType().getTypeName());
+	}
+
+	public ReimbursementDTO convertToDTOFull(Reimbursement r) {
+		// convert all receipt byte arrays to string for DTO conversion
+		log.info("Receipt before encoding:" + r.getReceipt());
+		String encodedString = Base64.getEncoder().encodeToString(r.getReceipt());
+		System.out.println(encodedString);
+		Base64.Decoder decoder = Base64.getDecoder();
+		byte[] decodedByteArray = decoder.decode(encodedString);
+		// Verify the decoded string
+		String realReceipt = new String(decodedByteArray);
+		System.out.println(realReceipt);
+		// check for any empty resolverIds and resolutionDates
+		log.info(r);
+		return new ReimbursementDTO(r.getrId(), r.getAmount().toPlainString(), r.getSubmissionDateTime().toString(),
+				r.getResolutionDateTime().toString(), r.getDescription(), realReceipt,
+				r.getAuthor().getUserId(), r.getResolver().getUserId(), r.getStatus().getStatusId(),
+				r.getStatus().getStatusName(), r.getType().getTypeId(), r.getType().getTypeName());
 	}
 }

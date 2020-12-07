@@ -108,6 +108,8 @@ function goAdmin(){
 function profile() {
 	console.log('profile link clicked!');
 	let xhr = new XMLHttpRequest();
+	let user = sessionStorage.getItem('currentUser');
+	let data = JSON.parse(user);
 	xhr.onreadystatechange = function() {
 		if (this.readyState <= 3) {
 			console.log('loading...')
@@ -126,7 +128,7 @@ function profile() {
 
 	}
 	xhr.open("POST", "user");
-	xhr.send();
+	xhr.send(JSON.stringify(data));
 }
 
 let welcome = document.getElementById('welcome-message');
