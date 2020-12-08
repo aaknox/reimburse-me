@@ -42,6 +42,7 @@
 * The application has reasonable test coverage of the service layer thanks to JUnit and Mockito, and implements log4j for appropriate logging. 
 
 **Reimbursement Statuses Diagram** 
+
 ![](./imgs/state-chart.jpg)
 
 **Reimbursement Types**
