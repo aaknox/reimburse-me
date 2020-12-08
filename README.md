@@ -1,10 +1,12 @@
-# Project-1: Employee Reimbursment System (ERS)
+# ReimburseMe! : Employee Reimbursment System (ERS)
+## Revature Project #1
 
-## Executive Summary
+## Summary
 * The Expense Reimbursement System (ERS) will manage the process of reimbursing employees for expenses incurred while on company time. 
 * All employees in the company can login and submit requests for reimbursement and view their past tickets and pending requests. 
 * Finance managers can log in and view all reimbursement requests and past history for all employees in the company. 
 * Finance managers are authorized to approve and deny requests for expense reimbursement.
+* Users can upload a document or image of their receipt when submitting reimbursements which can stored in the database and reviewed by a financial manager.
 
 #### Employee User Stories 
 - An Employee can login
@@ -28,8 +30,18 @@
 - A Manager can view all Employees
 - A Manager can view reimbursement requests from a single Employee 
 
+## Technical Requirements
 
-**State-chart Diagram (Reimbursement Statuses)** 
+* The back-end system uses **Hibernate** to connect to an **AWS RDS Postgres database**. 
+* The application is deployed onto a Tomcat Server. 
+* The middle tier uses Servlet technology for dynamic Web application development. 
+* The front-end view uses HTML/CSS/JavaScript to make an application that can call server-side components.
+* The API follows REST by making HTTP requests between client and server using JSON and AJAX.
+* Passwords are encrypted in Java using BCrypt and securely stored in the database. 
+* The middle tier follows a front controller, layered architecture to achieve efficient Agile development.
+* The application has reasonable test coverage of the service layer thanks to JUnit and Mockito, and implements log4j for appropriate logging. 
+
+**Reimbursement Statuses Diagram** 
 ![](./imgs/state-chart.jpg)
 
 **Reimbursement Types**
@@ -47,13 +59,3 @@ Employees must select the type of reimbursement as: LODGING, TRAVEL, FOOD, or OT
 
 **Activity Diagram**
 ![](./imgs/activity.jpg)
-
-## Technical Requirements
-
-* The back-end system shall use **Hibernate** to connect to an **AWS RDS Postgres database**. 
-* The application shall deploy onto a Tomcat Server. 
-* The middle tier shall use Servlet technology for dynamic Web application development. 
-* The front-end view shall use HTML/JavaScript to make an application that can call server-side components. 
-* Passwords shall be encrypted in Java and securely stored in the database. 
-* The middle tier shall follow proper layered architecture, have reasonable (~70%) test coverage of the service layer, and implement log4j for appropriate logging. 
-* Users can upload a document or image of their receipt when submitting reimbursements which can stored in the database and reviewed by a financial manager.
