@@ -41,6 +41,8 @@
 * The middle tier follows a front controller, layered architecture to achieve efficient Agile development.
 * The application has reasonable test coverage of the service layer thanks to JUnit and Mockito, and implements log4j for appropriate logging. 
 
+## Visual Aids
+
 **Reimbursement Statuses Diagram** 
 
 ![](./imgs/state-chart.jpg)
@@ -50,13 +52,17 @@
 Employees must select the type of reimbursement as: LODGING, TRAVEL, FOOD, or OTHER.
 
 **Logical Model**
+
 ![](./imgs/logical.jpg)
 
 **Physical Model**
+
 ![](./imgs/physical.jpg)
 
 **Use Case Diagram**
+
 ![](./imgs/use-case.jpg)
 
 **Activity Diagram**
+
 ![](./imgs/activity.jpg)
